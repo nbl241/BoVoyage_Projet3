@@ -124,6 +124,10 @@
     <Compile Include="Migrations\201807100916036_Init.Designer.cs">
       <DependentUpon>201807100916036_Init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807101002032_ModiffeDossierReservation.cs" />
+    <Compile Include="Migrations\201807101002032_ModiffeDossierReservation.Designer.cs">
+      <DependentUpon>201807101002032_ModiffeDossierReservation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\AgenceVoyage.cs" />
     <Compile Include="Model\BaseModel.cs" />
@@ -150,6 +154,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201807100916036_Init.resx">
       <DependentUpon>201807100916036_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807101002032_ModiffeDossierReservation.resx">
+      <DependentUpon>201807101002032_ModiffeDossierReservation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
