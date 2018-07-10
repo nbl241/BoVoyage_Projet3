@@ -36,6 +36,17 @@ namespace BoVoyage_Projet3.Controllers
             return Ok(agenceVoyage);
         }
 
+        //GET: api/AgenceVoyages/search
+        [Route("api/AgenceVoyages/search")]
+        public IQueryable<AgenceVoyage> GetSearch(string nom = "")
+        {
+            var t = db.AgencesVoyage.Where(x => !x.Deleted);
+            if (!string.IsNullOrWhiteSpace(nom))
+                t = t.Where(x => x.Nom.Contains(nom));
+
+            return t;
+        }
+
         // PUT: api/AgenceVoyages/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutAgenceVoyage(int id, AgenceVoyage agenceVoyage)
@@ -100,17 +111,6 @@ namespace BoVoyage_Projet3.Controllers
             db.SaveChanges();
 
             return Ok(agenceVoyage);
-        }
-
-        //GET: api/AgenceVoyages/search
-        [Route("api/AgenceVoyages/search")]
-        public IQueryable<AgenceVoyage> GetSearch(string nom = "")
-        {
-            var t = db.AgencesVoyage.Where(x => !x.Deleted);
-            if (!string.IsNullOrWhiteSpace(nom))
-                t = t.Where(x => x.Nom == nom);
-
-            return t;
         }
 
         protected override void Dispose(bool disposing)

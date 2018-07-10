@@ -36,6 +36,29 @@ namespace BoVoyage_Projet3.Controllers
             return Ok(participant);
         }
 
+        // GET: api/Participants/Search
+        [Route("api/Participants/search")]
+        public IQueryable<Participant> GetSearch(string nom = "", string prenom = "", string telephone = "", DateTime? dateNaissance = null, int? age = null)
+        {
+            var t = db.Participants.Where(x => !x.Deleted);
+            if (!string.IsNullOrWhiteSpace(nom))
+                t = t.Where(x => x.Nom.Contains(nom));
+
+            if (!string.IsNullOrWhiteSpace(prenom))
+                t = t.Where(x => x.Prenom.Contains(prenom));
+
+            if (!string.IsNullOrWhiteSpace(telephone))
+                t = t.Where(x => x.Telephone.Contains(telephone));
+
+            if (dateNaissance != null)
+                t = t.Where(x => x.DateNaissance == dateNaissance);
+
+            if (age != null)
+                t = t.Where(x => x.Age == age);
+
+            return t;
+        }
+
         // PUT: api/Participants/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutParticipant(int id, Participant participant)
@@ -100,29 +123,6 @@ namespace BoVoyage_Projet3.Controllers
             db.SaveChanges();
 
             return Ok(participant);
-        }
-
-        // GET: api/Participants/Search
-        [Route("api/Participants/search")]
-        public IQueryable<Participant> GetSearch(string nom = "", string prenom = "", string telephone = "", DateTime? dateNaissance = null, int? age = null)
-        {
-            var t = db.Participants.Where(x => !x.Deleted);
-            if (!string.IsNullOrWhiteSpace(nom))
-                t = t.Where(x => x.Nom == nom);
-
-            if (!string.IsNullOrWhiteSpace(prenom))
-                t = t.Where(x => x.Prenom == prenom);
-
-            if (!string.IsNullOrWhiteSpace(telephone))
-                t = t.Where(x => x.Telephone == telephone);
-
-            if (dateNaissance != null)
-                t = t.Where(x => x.DateNaissance == dateNaissance);
-
-            if (age != null)
-                t = t.Where(x => x.Age == age);
-
-            return t;
         }
 
         protected override void Dispose(bool disposing)
