@@ -93,6 +93,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ClientsController.cs" />
+    <Compile Include="Controllers\DestinationsController.cs" />
+    <Compile Include="Controllers\ParticipantsController.cs" />
+    <Compile Include="Controllers\VoyagesController.cs" />
     <Compile Include="Data\BoVoyageDbContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -101,14 +105,14 @@
     <Compile Include="Migrations\201807100916036_Init.Designer.cs">
       <DependentUpon>201807100916036_Init.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migration\Configuration.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\AgenceVoyage.cs" />
     <Compile Include="Model\BaseModel.cs" />
     <Compile Include="Model\Client.cs" />
     <Compile Include="Model\Destination.cs" />
     <Compile Include="Model\Participant.cs" />
     <Compile Include="Model\Personne.cs" />
-    <Compile Include="Model\Reservation.cs" />
+    <Compile Include="Model\DossierReservation.cs" />
     <Compile Include="Model\Voyage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -123,7 +127,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201807100916036_Init.resx">
