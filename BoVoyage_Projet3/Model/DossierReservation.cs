@@ -13,7 +13,6 @@ namespace BoVoyage_Projet3.Models
 
         public decimal PrixTotal { get; set; }
 
-
         [ForeignKey("IdClient")]
         public Voyage Voyage { get; set; }
         public int IdVoyage { get; set; }
