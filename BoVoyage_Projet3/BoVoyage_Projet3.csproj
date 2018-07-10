@@ -89,6 +89,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="Html\AgenceVoyage.html" />
+    <Content Include="Html\Client.html" />
+    <Content Include="Html\Destination.html" />
+    <Content Include="Html\DossierReservation.html" />
+    <Content Include="Html\Participant.html" />
+    <Content Include="Html\Personne.html" />
+    <Content Include="Html\Voyage.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -97,6 +104,8 @@
     <Compile Include="Controllers\DestinationsController.cs" />
     <Compile Include="Controllers\ParticipantsController.cs" />
     <Compile Include="Controllers\VoyagesController.cs" />
+    <Compile Include="Controllers\AgenceVoyagesController.cs" />
+    <Compile Include="Controllers\DossiersReservationController.cs" />
     <Compile Include="Data\BoVoyageDbContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
