@@ -102,6 +102,7 @@
     <Content Include="Html\Client.html" />
     <Content Include="Html\Destination.html" />
     <Content Include="Html\DossierReservation.html" />
+    <Content Include="Html\Home.html" />
     <Content Include="Html\Participant.html" />
     <Content Include="Html\Personne.html" />
     <Content Include="Html\Voyage.html" />
