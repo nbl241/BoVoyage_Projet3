@@ -13,7 +13,7 @@ namespace BoVoyage_Projet3.Migration
                     {
                         ID = c.Int(nullable: false, identity: true),
                         Name = c.String(),
-                        CreatedAt = c.DateTime(nullable: false),
+                        CreatedAt = c.DateTime(nullable: false, defaultValueSql: "getdate()"),
                         Deleted = c.Boolean(nullable: false),
                         DeletedAt = c.DateTime(),
                     })
@@ -30,7 +30,7 @@ namespace BoVoyage_Projet3.Migration
                         Adresse = c.String(),
                         Telephone = c.String(),
                         DateNaissance = c.DateTime(nullable: false),
-                        CreatedAt = c.DateTime(nullable: false),
+                        CreatedAt = c.DateTime(nullable: false, defaultValueSql: "getdate()"),
                         Deleted = c.Boolean(nullable: false),
                         DeletedAt = c.DateTime(),
                     })
@@ -45,7 +45,7 @@ namespace BoVoyage_Projet3.Migration
                         Pays = c.String(),
                         Region = c.String(),
                         Description = c.String(),
-                        CreatedAt = c.DateTime(nullable: false),
+                        CreatedAt = c.DateTime(nullable: false, defaultValueSql: "getdate()"),
                         Deleted = c.Boolean(nullable: false),
                         DeletedAt = c.DateTime(),
                     })
@@ -61,7 +61,7 @@ namespace BoVoyage_Projet3.Migration
                         IdVoyage = c.Int(nullable: false),
                         IdClient = c.Int(nullable: false),
                         IdParticipant = c.Int(nullable: false),
-                        CreatedAt = c.DateTime(nullable: false),
+                        CreatedAt = c.DateTime(nullable: false, defaultValueSql: "getdate()"),
                         Deleted = c.Boolean(nullable: false),
                         DeletedAt = c.DateTime(),
                     })
@@ -83,7 +83,7 @@ namespace BoVoyage_Projet3.Migration
                         TarifToutCompris = c.Decimal(nullable: false, precision: 18, scale: 2),
                         IdAgenceVoyage = c.Int(nullable: false),
                         IdDestination = c.Int(nullable: false),
-                        CreatedAt = c.DateTime(nullable: false),
+                        CreatedAt = c.DateTime(nullable: false, defaultValueSql: "getdate()"),
                         Deleted = c.Boolean(nullable: false),
                         DeletedAt = c.DateTime(),
                     })
