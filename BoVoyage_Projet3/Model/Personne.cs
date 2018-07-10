@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -19,6 +20,7 @@ namespace BoVoyage_Projet3.Models
 
         public DateTime DateNaissance { get; set; }
 
+        [NotMapped]
         public int Age { get { return DateTime.Today.Year - DateNaissance.Year; } }
     }
 }

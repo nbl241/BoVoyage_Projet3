@@ -80,7 +80,7 @@ namespace BoVoyage_Projet3.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Personnes.Add(participant);
+            db.Participants.Add(participant);
             db.SaveChanges();
 
             return CreatedAtRoute("DefaultApi", new { id = participant.ID }, participant);
