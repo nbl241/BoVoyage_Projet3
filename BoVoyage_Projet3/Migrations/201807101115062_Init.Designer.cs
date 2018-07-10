@@ -13,7 +13,7 @@ namespace BoVoyage_Projet3.Migration
         
         string IMigrationMetadata.Id
         {
-            get { return "201807100916036_Init"; }
+            get { return "201807101115062_Init"; }
         }
         
         string IMigrationMetadata.Source

@@ -20,10 +20,11 @@ namespace BoVoyage_Projet3.Migration
                 .PrimaryKey(t => t.ID);
             
             CreateTable(
-                "dbo.Personnes",
+                "dbo.Clients",
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
+                        Email = c.String(),
                         Civilite = c.String(),
                         Nom = c.String(),
                         Prenom = c.String(),
@@ -52,7 +53,7 @@ namespace BoVoyage_Projet3.Migration
                 .PrimaryKey(t => t.ID);
             
             CreateTable(
-                "dbo.Reservations",
+                "dbo.DossiersReservation",
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
@@ -66,11 +67,30 @@ namespace BoVoyage_Projet3.Migration
                         DeletedAt = c.DateTime(),
                     })
                 .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.Clients", t => t.IdClient)
-                .ForeignKey("dbo.Participants", t => t.IdParticipant)
-                .ForeignKey("dbo.Voyages", t => t.IdClient, cascadeDelete: true)
+                .ForeignKey("dbo.Clients", t => t.IdClient, cascadeDelete: true)
+                .ForeignKey("dbo.Participants", t => t.IdParticipant, cascadeDelete: true)
+                .ForeignKey("dbo.Voyages", t => t.IdVoyage, cascadeDelete: true)
+                .Index(t => t.IdVoyage)
                 .Index(t => t.IdClient)
                 .Index(t => t.IdParticipant);
+            
+            CreateTable(
+                "dbo.Participants",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        Reduction = c.Single(nullable: false),
+                        Civilite = c.String(),
+                        Nom = c.String(),
+                        Prenom = c.String(),
+                        Adresse = c.String(),
+                        Telephone = c.String(),
+                        DateNaissance = c.DateTime(nullable: false),
+                        CreatedAt = c.DateTime(nullable: false, defaultValueSql: "getdate()"),
+                        Deleted = c.Boolean(nullable: false),
+                        DeletedAt = c.DateTime(),
+                    })
+                .PrimaryKey(t => t.ID);
             
             CreateTable(
                 "dbo.Voyages",
@@ -93,51 +113,25 @@ namespace BoVoyage_Projet3.Migration
                 .Index(t => t.IdAgenceVoyage)
                 .Index(t => t.IdDestination);
             
-            CreateTable(
-                "dbo.Clients",
-                c => new
-                    {
-                        ID = c.Int(nullable: false),
-                        Email = c.String(),
-                    })
-                .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.Personnes", t => t.ID)
-                .Index(t => t.ID);
-            
-            CreateTable(
-                "dbo.Participants",
-                c => new
-                    {
-                        ID = c.Int(nullable: false),
-                        Reduction = c.Single(nullable: false),
-                    })
-                .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.Personnes", t => t.ID)
-                .Index(t => t.ID);
-            
         }
         
         public override void Down()
         {
-            DropForeignKey("dbo.Participants", "ID", "dbo.Personnes");
-            DropForeignKey("dbo.Clients", "ID", "dbo.Personnes");
-            DropForeignKey("dbo.Reservations", "IdClient", "dbo.Voyages");
+            DropForeignKey("dbo.DossiersReservation", "IdVoyage", "dbo.Voyages");
             DropForeignKey("dbo.Voyages", "IdDestination", "dbo.Destinations");
             DropForeignKey("dbo.Voyages", "IdAgenceVoyage", "dbo.AgencesVoyage");
-            DropForeignKey("dbo.Reservations", "IdParticipant", "dbo.Participants");
-            DropForeignKey("dbo.Reservations", "IdClient", "dbo.Clients");
-            DropIndex("dbo.Participants", new[] { "ID" });
-            DropIndex("dbo.Clients", new[] { "ID" });
+            DropForeignKey("dbo.DossiersReservation", "IdParticipant", "dbo.Participants");
+            DropForeignKey("dbo.DossiersReservation", "IdClient", "dbo.Clients");
             DropIndex("dbo.Voyages", new[] { "IdDestination" });
             DropIndex("dbo.Voyages", new[] { "IdAgenceVoyage" });
-            DropIndex("dbo.Reservations", new[] { "IdParticipant" });
-            DropIndex("dbo.Reservations", new[] { "IdClient" });
-            DropTable("dbo.Participants");
-            DropTable("dbo.Clients");
+            DropIndex("dbo.DossiersReservation", new[] { "IdParticipant" });
+            DropIndex("dbo.DossiersReservation", new[] { "IdClient" });
+            DropIndex("dbo.DossiersReservation", new[] { "IdVoyage" });
             DropTable("dbo.Voyages");
-            DropTable("dbo.Reservations");
+            DropTable("dbo.Participants");
+            DropTable("dbo.DossiersReservation");
             DropTable("dbo.Destinations");
-            DropTable("dbo.Personnes");
+            DropTable("dbo.Clients");
             DropTable("dbo.AgencesVoyage");
         }
     }
