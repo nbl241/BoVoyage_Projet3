@@ -102,6 +102,26 @@ namespace BoVoyage_Projet3.Controllers
             return Ok(dossierReservation);
         }
 
+        // GET: api/DossiersReservation/Search
+        [Route("api/DossiersReservation/search")]
+        public IQueryable<DossierReservation> GetSearch(decimal? prixTotal = null, int? idVoyage = null, int? idClient = null, int? idParticipant = null)
+        {
+            var t = db.DossiersReservation.Where(x => !x.Deleted);
+            if (prixTotal != null)
+                t = t.Where(x => x.PrixTotal == prixTotal);
+
+            if (idVoyage != null)
+                t = t.Where(x => x.IdVoyage == idVoyage);
+
+            if (idClient != null)
+                t = t.Where(x => x.IdClient == idClient);
+
+            if (idParticipant != null)
+                t = t.Where(x => x.IdParticipant == idParticipant);
+
+            return t;
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

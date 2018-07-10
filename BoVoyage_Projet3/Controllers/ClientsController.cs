@@ -102,6 +102,32 @@ namespace BoVoyage_Projet3.Controllers
             return Ok(client);
         }
 
+        // GET: api/Clients/Search
+        [Route("api/Clients/search")]
+        public IQueryable<Client> GetSearch(string nom = "", string prenom = "", string telephone = "", DateTime? dateNaissance = null, int? age = null, string email = "")
+        {
+            var t = db.Clients.Where(x => !x.Deleted);
+            if (!string.IsNullOrWhiteSpace(nom))
+                t = t.Where(x => x.Nom == nom);
+
+            if (!string.IsNullOrWhiteSpace(prenom))
+                t = t.Where(x => x.Prenom == prenom);
+
+            if (!string.IsNullOrWhiteSpace(telephone))
+                t = t.Where(x => x.Telephone == telephone);
+
+            if (dateNaissance != null)
+                t = t.Where(x => x.DateNaissance == dateNaissance);
+
+            if (age != null)
+                t = t.Where(x => x.Age == age);
+
+            if (!string.IsNullOrWhiteSpace(email))
+                t = t.Where(x => x.Email == email);
+
+            return t;
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

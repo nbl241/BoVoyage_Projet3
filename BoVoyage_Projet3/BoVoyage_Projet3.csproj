@@ -125,6 +125,10 @@
     <Compile Include="Migrations\201807101115062_Init.Designer.cs">
       <DependentUpon>201807101115062_Init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807101417310_ModifAgenceName.cs" />
+    <Compile Include="Migrations\201807101417310_ModifAgenceName.Designer.cs">
+      <DependentUpon>201807101417310_ModifAgenceName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\AgenceVoyage.cs" />
     <Compile Include="Model\BaseModel.cs" />
@@ -151,6 +155,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201807101115062_Init.resx">
       <DependentUpon>201807101115062_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807101417310_ModifAgenceName.resx">
+      <DependentUpon>201807101417310_ModifAgenceName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

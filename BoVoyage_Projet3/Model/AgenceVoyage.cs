@@ -9,6 +9,6 @@ namespace BoVoyage_Projet3.Models
     [Table(name: "AgencesVoyage")]
     public class AgenceVoyage : BaseModel
     {
-        public string Name { get; set; }
+        public string Nom { get; set; }
     }
 }

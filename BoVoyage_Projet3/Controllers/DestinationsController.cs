@@ -102,6 +102,26 @@ namespace BoVoyage_Projet3.Controllers
             return Ok(destination);
         }
 
+        // GET: api/Destinations/Search
+        [Route("api/Destinations/search")]
+        public IQueryable<Destination> GetSearch(string continent = "", string pays = "", string region = "", string description = "")
+        {
+            var t = db.Destinations.Where(x => !x.Deleted);
+            if (!string.IsNullOrWhiteSpace(continent))
+                t = t.Where(x => x.Continent == continent);
+
+            if (!string.IsNullOrWhiteSpace(pays))
+                t = t.Where(x => x.Pays == pays);
+
+            if (!string.IsNullOrWhiteSpace(region))
+                t = t.Where(x => x.Region == region);
+
+            if (!string.IsNullOrWhiteSpace(description))
+                t = t.Where(x => x.Description == description);
+
+            return t;
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -23,7 +23,6 @@ namespace BoVoyage_Projet3.Data
 
         public DbSet<Participant> Participants { get; set; }
 
-
         public DbSet<Voyage> Voyages { get; set; }
     }
 }
