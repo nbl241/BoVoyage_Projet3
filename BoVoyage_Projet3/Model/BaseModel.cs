@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace BoVoyageTest.Models
+namespace BoVoyage_Projet3.Models
 {
     public abstract class BaseModel
     {
