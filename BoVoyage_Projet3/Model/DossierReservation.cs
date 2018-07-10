@@ -6,8 +6,8 @@ using System.Web;
 
 namespace BoVoyage_Projet3.Models
 {
-    [Table(name: "Reservations")]
-    public class Reservation : BaseModel
+    [Table(name: "DossiersReservation")]
+    public class DossierReservation : BaseModel
     {
         public string NumeroCarteBancaire { get; set; }
 

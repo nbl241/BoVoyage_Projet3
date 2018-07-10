@@ -13,11 +13,11 @@ namespace BoVoyage_Projet3.Data
         {
         }
 
-        public DbSet<AgenceVoyage> Agences { get; set; }
+        public DbSet<AgenceVoyage> AgencesVoyage { get; set; }
 
         public DbSet<Client> Clients { get; set; }
 
-        public DbSet<Reservation> Reservations { get; set; }
+        public DbSet<DossierReservation> DossiersReservation { get; set; }
 
         public DbSet<Destination> Destinations { get; set; }
 
