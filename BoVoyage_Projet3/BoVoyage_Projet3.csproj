@@ -100,11 +100,12 @@
     <Content Include="Global.asax" />
     <Content Include="Html\AgenceVoyage.html" />
     <Content Include="Html\Client.html" />
+    <Content Include="Html\ClientAjouter.html" />
+    <Content Include="Html\ClientModifier.html" />
     <Content Include="Html\Destination.html" />
     <Content Include="Html\DossierReservation.html" />
     <Content Include="Html\Home.html" />
     <Content Include="Html\Participant.html" />
-    <Content Include="Html\Personne.html" />
     <Content Include="Html\Voyage.html" />
     <Content Include="Web.config" />
   </ItemGroup>
