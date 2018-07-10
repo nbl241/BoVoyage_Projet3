@@ -108,7 +108,7 @@ namespace BoVoyage_Projet3.Controllers
         {
             var t = db.Clients.Where(x => !x.Deleted);
             if (!string.IsNullOrWhiteSpace(nom))
-                t = t.Where(x => x.Nom == nom);
+                t = t.Where(x => x.Nom==nom);
 
             if (!string.IsNullOrWhiteSpace(prenom))
                 t = t.Where(x => x.Prenom == prenom);

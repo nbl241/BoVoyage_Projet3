@@ -135,9 +135,11 @@
     <Compile Include="Model\BaseModel.cs" />
     <Compile Include="Model\Client.cs" />
     <Compile Include="Model\Destination.cs" />
+    <Compile Include="Model\EtatDossierReservation.cs" />
     <Compile Include="Model\Participant.cs" />
     <Compile Include="Model\Personne.cs" />
     <Compile Include="Model\DossierReservation.cs" />
+    <Compile Include="Model\RaisonAnnulationDossier.cs" />
     <Compile Include="Model\Voyage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
