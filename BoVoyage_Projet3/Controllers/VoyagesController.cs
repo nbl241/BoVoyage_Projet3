@@ -36,6 +36,32 @@ namespace BoVoyage_Projet3.Controllers
             return Ok(voyage);
         }
 
+        // GET: api/Voyages/Search
+        [Route("api/Voyages/search")]
+        public IQueryable<Voyage> GetSearch(DateTime? dateAller = null, DateTime? dateRetour = null, int? placesDisponibles = null, decimal? tarifToutCompris = null, int? idAgenceVoyage = null, int? idDestination = null)
+        {
+            var t = db.Voyages.Where(x => !x.Deleted);
+            if (dateAller != null)
+                t = t.Where(x => x.DateAller == dateAller);
+
+            if (dateRetour != null)
+                t = t.Where(x => x.DateRetour == dateRetour);
+
+            if (placesDisponibles != null)
+                t = t.Where(x => x.PlacesDisponibles == placesDisponibles);
+
+            if (tarifToutCompris != null)
+                t = t.Where(x => x.TarifToutCompris == tarifToutCompris);
+
+            if (idAgenceVoyage != null)
+                t = t.Where(x => x.IdAgenceVoyage == idAgenceVoyage);
+
+            if (idDestination != null)
+                t = t.Where(x => x.IdDestination == idDestination);
+
+            return t;
+        }
+
         // PUT: api/Voyages/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutVoyage(int id, Voyage voyage)
@@ -100,32 +126,6 @@ namespace BoVoyage_Projet3.Controllers
             db.SaveChanges();
 
             return Ok(voyage);
-        }
-
-        // GET: api/Voyages/Search
-        [Route("api/Voyages/search")]
-        public IQueryable<Voyage> GetSearch(DateTime? dateAller = null, DateTime? dateRetour = null, int? placesDisponibles = null, decimal? tarifToutCompris = null, int? idAgenceVoyage = null, int? idDestination = null)
-        {
-            var t = db.Voyages.Where(x => !x.Deleted);
-            if (dateAller != null)
-                t = t.Where(x => x.DateAller == dateAller);
-
-            if (dateRetour != null)
-                t = t.Where(x => x.DateRetour == dateRetour);
-
-            if (placesDisponibles != null)
-                t = t.Where(x => x.PlacesDisponibles == placesDisponibles);
-
-            if (tarifToutCompris != null)
-                t = t.Where(x => x.TarifToutCompris == tarifToutCompris);
-
-            if (idAgenceVoyage != null)
-                t = t.Where(x => x.IdAgenceVoyage == idAgenceVoyage);
-
-            if (idDestination != null)
-                t = t.Where(x => x.IdDestination == idDestination);
-
-            return t;
         }
 
         protected override void Dispose(bool disposing)

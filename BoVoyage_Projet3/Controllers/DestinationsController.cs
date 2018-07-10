@@ -36,6 +36,26 @@ namespace BoVoyage_Projet3.Controllers
             return Ok(destination);
         }
 
+        // GET: api/Destinations/Search
+        [Route("api/Destinations/search")]
+        public IQueryable<Destination> GetSearch(string continent = "", string pays = "", string region = "", string description = "")
+        {
+            var t = db.Destinations.Where(x => !x.Deleted);
+            if (!string.IsNullOrWhiteSpace(continent))
+                t = t.Where(x => x.Continent.Contains(continent));
+
+            if (!string.IsNullOrWhiteSpace(pays))
+                t = t.Where(x => x.Pays.Contains(pays));
+
+            if (!string.IsNullOrWhiteSpace(region))
+                t = t.Where(x => x.Region.Contains(region));
+
+            if (!string.IsNullOrWhiteSpace(description))
+                t = t.Where(x => x.Description.Contains(description));
+
+            return t;
+        }
+
         // PUT: api/Destinations/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutDestination(int id, Destination destination)
@@ -100,26 +120,6 @@ namespace BoVoyage_Projet3.Controllers
             db.SaveChanges();
 
             return Ok(destination);
-        }
-
-        // GET: api/Destinations/Search
-        [Route("api/Destinations/search")]
-        public IQueryable<Destination> GetSearch(string continent = "", string pays = "", string region = "", string description = "")
-        {
-            var t = db.Destinations.Where(x => !x.Deleted);
-            if (!string.IsNullOrWhiteSpace(continent))
-                t = t.Where(x => x.Continent == continent);
-
-            if (!string.IsNullOrWhiteSpace(pays))
-                t = t.Where(x => x.Pays == pays);
-
-            if (!string.IsNullOrWhiteSpace(region))
-                t = t.Where(x => x.Region == region);
-
-            if (!string.IsNullOrWhiteSpace(description))
-                t = t.Where(x => x.Description == description);
-
-            return t;
         }
 
         protected override void Dispose(bool disposing)
