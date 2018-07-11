@@ -114,7 +114,6 @@
 
         <p id="loadingLabel">Chargement en cours...</p>
 
-        <button type="button" class="btn btn-primary" id="boutonModifier">Modifier</button>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -136,7 +135,12 @@
 
                 let searchurl = new URL("http://localhost:53494/api/clients/search");
                 searchurl.searchParams.append("nom", $("#inputNom").val());
+                searchurl.searchParams.append("prenom", $("#inputPrenom").val());
+                searchurl.searchParams.append("adresse", $("#inputAdresse").val());
+                searchurl.searchParams.append("telephone", $("#inputTel").val());
                 searchurl.searchParams.append("email", $("#inputEmail").val());
+                searchurl.searchParams.append("dateNaissance", $("#inputDateNaissance").val());
+                searchurl.searchParams.append("age", $("#inputAge").val());
 
                 console.log(searchurl);
 
@@ -153,7 +157,7 @@
                         $("#tableBody").empty();
 
                         for (let item of data) {
-                            let newRow = `<td>${item.Nom}</td><td>${item.Prenom}</td><td>${item.Email}</td>`;
+                            let newRow = `<td>${item.Nom}</td><td>${item.Prenom}</td><td>${item.Adresse}</td><td>${item.Telephone}</td><td>${item.Email}</td><td>${item.DateNaissance}</td><td>${item.Age}</td>`;
                             $("#tableBody").append(`<tr class="clickable-row" data-href="${item.ID}">${newRow}</tr>`);
                         }
 
