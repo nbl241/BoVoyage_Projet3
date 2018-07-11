@@ -84,9 +84,12 @@
                     <th>Nom</th>
                     <th>Prénom</th>
                     <th>Email</th>
+                    <th></th>
+                    <th></th>
                 </tr>
             </thead>
-            <tbody id="tableBody"></tbody>
+            <tbody id="tableBody">
+            </tbody>
         </table>
 
 
@@ -114,11 +117,12 @@
     <script>
 
         $(document).ready(function () {
-            let resultot;
+            let resultot = 0;
 
             $('#boutonModifier').click(function () {
+                if (resultot == 0) { alert(`Hého! === 0 !!!`);}
                 let modiffeUrl = new URL("http://localhost:53494/html/ClientModifier.html");
-                modiffeUrl.searchParams.append("id", "1");
+                modiffeUrl.searchParams.append("id", resultot);
                 window.location.href = modiffeUrl;
                 return false;
             });
@@ -126,9 +130,6 @@
            
 
             $("form").submit(function (ev) {
-
-                // console.log(obj);
-
 
                 let searchurl = new URL("http://localhost:53494/api/clients/search");
                 searchurl.searchParams.append("nom", $("#inputName").val());
@@ -147,15 +148,28 @@
 
                         for (let item of data) {
                             let newRow = `<td>${item.Nom}</td><td>${item.Prenom}</td><td>${item.Email}</td>`;
-                            $("#tableBody").append(`<tr class="clickable-row" data-href="url://">${newRow}</tr>`);
+                            $("#tableBody").append(`<tr class="clickable-row " data-href="${item.ID}">${newRow}</tr>`);
                         }
 
                         $(".clickable-row").click(function () {
-                            alert('Error !!!');
-                            resultot = 0;
-                            //window.location = $(this).data("href");
+                            resultot = $(this).data("href");
+
+                            // alert(resultot);
+
+
+
+                            if ($(this).hasClass('bg-success')) {
+                                $(this).removeClass('bg-success');
+
+                            } else {
+                                $(this).addClass('bg-success').siblings().removeClass('bg-success');
+
+                            }
+
+
                         });
 
+                      
                     },
                     error: function (error) {
                         alert('Error !!!');
