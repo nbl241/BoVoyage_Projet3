@@ -18,12 +18,21 @@ namespace BoVoyage_Projet3.Controllers
         private BoVoyageDbContext db = new BoVoyageDbContext();
 
         // GET: api/Participants
+        /// <summary>
+        /// Retourne la liste des participants
+        /// </summary>
+        /// <returns></returns>
         public IQueryable<Participant> GetParticipants()
         {
             return db.Participants;
         }
 
         // GET: api/Participants/id
+        /// <summary>
+        /// Retourne un participant selon l'id spécifié
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [ResponseType(typeof(Participant))]
         public IHttpActionResult GetParticipant(int id)
         {
@@ -37,6 +46,15 @@ namespace BoVoyage_Projet3.Controllers
         }
 
         // GET: api/Participants/Search
+        /// <summary>
+        /// Permet de chercher un participant selon le paramètre spécifié
+        /// </summary>
+        /// <param name="nom"></param>
+        /// <param name="prenom"></param>
+        /// <param name="telephone"></param>
+        /// <param name="dateNaissance"></param>
+        /// <param name="age"></param>
+        /// <returns></returns>
         [Route("api/Participants/search")]
         public IQueryable<Participant> GetSearch(string nom = "", string prenom = "", string telephone = "", DateTime? dateNaissance = null, int? age = null)
         {
@@ -59,7 +77,33 @@ namespace BoVoyage_Projet3.Controllers
             return t;
         }
 
+        // POST: api/Participants
+        /// <summary>
+        /// Permet d'ajouter un participant
+        /// </summary>
+        /// <param name="participant"></param>
+        /// <returns></returns>
+        [ResponseType(typeof(Participant))]
+        public IHttpActionResult PostParticipant(Participant participant)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            db.Participants.Add(participant);
+            db.SaveChanges();
+
+            return CreatedAtRoute("DefaultApi", new { id = participant.ID }, participant);
+        }
+
         // PUT: api/Participants/5
+        /// <summary>
+        /// Permet de modifier un participant
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="participant"></param>
+        /// <returns></returns>
         [ResponseType(typeof(void))]
         public IHttpActionResult PutParticipant(int id, Participant participant)
         {
@@ -94,22 +138,12 @@ namespace BoVoyage_Projet3.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Participants
-        [ResponseType(typeof(Participant))]
-        public IHttpActionResult PostParticipant(Participant participant)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.Participants.Add(participant);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = participant.ID }, participant);
-        }
-
         // DELETE: api/Participants/5
+        /// <summary>
+        /// Permet de supprimer un participant
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [ResponseType(typeof(Participant))]
         public IHttpActionResult DeleteParticipant(int id)
         {

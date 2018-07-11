@@ -18,12 +18,21 @@ namespace BoVoyage_Projet3.Controllers
         private BoVoyageDbContext db = new BoVoyageDbContext();
 
         // GET: api/Clients
+        /// <summary>
+        /// Retourne la liste des clients
+        /// </summary>
+        /// <returns></returns>
         public IQueryable<Client> GetClients()
         {
             return db.Clients;
         }
 
-        // GET: api/Clients/5
+        // GET: api/Clients/id
+        /// <summary>
+        /// Retourne la liste des clients selon l'id spécifié
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [ResponseType(typeof(Client))]
         public IHttpActionResult GetClient(int id)
         {
@@ -37,6 +46,16 @@ namespace BoVoyage_Projet3.Controllers
         }
 
         // GET: api/Clients/Search
+        /// <summary>
+        /// Permet de chercher un client selon le paramètre spécifié
+        /// </summary>
+        /// <param name="nom"></param>
+        /// <param name="prenom"></param>
+        /// <param name="telephone"></param>
+        /// <param name="dateNaissance"></param>
+        /// <param name="age"></param>
+        /// <param name="email"></param>
+        /// <returns></returns>
         [Route("api/Clients/search")]
         public IQueryable<Client> GetSearch(string nom = "", string prenom = "", string telephone = "", DateTime? dateNaissance = null, int? age = null, string email = "")
         {
@@ -62,7 +81,33 @@ namespace BoVoyage_Projet3.Controllers
             return t;
         }
 
+        // POST: api/Clients
+        /// <summary>
+        /// Permet d'ajouter un client
+        /// </summary>
+        /// <param name="client"></param>
+        /// <returns></returns>
+        [ResponseType(typeof(Client))]
+        public IHttpActionResult PostClient(Client client)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            db.Clients.Add(client);
+            db.SaveChanges();
+
+            return CreatedAtRoute("DefaultApi", new { id = client.ID }, client);
+        }
+
         // PUT: api/Clients/5
+        /// <summary>
+        /// Permet de modifier un client
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="client"></param>
+        /// <returns></returns>
         [ResponseType(typeof(void))]
         public IHttpActionResult PutClient(int id, Client client)
         {
@@ -97,22 +142,12 @@ namespace BoVoyage_Projet3.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Clients
-        [ResponseType(typeof(Client))]
-        public IHttpActionResult PostClient(Client client)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.Clients.Add(client);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = client.ID }, client);
-        }
-
         // DELETE: api/Clients/5
+        /// <summary>
+        /// Permet de supprimer un client
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [ResponseType(typeof(Client))]
         public IHttpActionResult DeleteClient(int id)
         {

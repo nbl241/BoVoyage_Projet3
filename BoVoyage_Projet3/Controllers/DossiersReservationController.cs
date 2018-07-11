@@ -18,12 +18,21 @@ namespace BoVoyage_Projet3.Controllers
         private BoVoyageDbContext db = new BoVoyageDbContext();
 
         // GET: api/DossiersReservation
+        /// <summary>
+        /// Retourne la liste des dossiers de reservation
+        /// </summary>
+        /// <returns></returns>
         public IQueryable<DossierReservation> GetDossiersReservation()
         {
             return db.DossiersReservation;
         }
 
-        // GET: api/DossiersReservation/5
+        // GET: api/DossiersReservation/id
+        /// <summary>
+        /// Retourne un dossier de reservation selon l'id spécifié
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [ResponseType(typeof(DossierReservation))]
         public IHttpActionResult GetDossierReservation(int id)
         {
@@ -37,6 +46,14 @@ namespace BoVoyage_Projet3.Controllers
         }
 
         // GET: api/DossiersReservation/Search
+        /// <summary>
+        /// Permet de chercher un dossier de reservation selon le paramètre spécifié
+        /// </summary>
+        /// <param name="prixTotal"></param>
+        /// <param name="idVoyage"></param>
+        /// <param name="idClient"></param>
+        /// <param name="idParticipant"></param>
+        /// <returns></returns>
         [Route("api/DossiersReservation/search")]
         public IQueryable<DossierReservation> GetSearch(decimal? prixTotal = null, int? idVoyage = null, int? idClient = null, int? idParticipant = null)
         {
@@ -56,7 +73,33 @@ namespace BoVoyage_Projet3.Controllers
             return t;
         }
 
+        // POST: api/DossiersReservation
+        /// <summary>
+        /// Permet d'ajouter un dossier de reservation
+        /// </summary>
+        /// <param name="dossierReservation"></param>
+        /// <returns></returns>
+        [ResponseType(typeof(DossierReservation))]
+        public IHttpActionResult PostDossierReservation(DossierReservation dossierReservation)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            db.DossiersReservation.Add(dossierReservation);
+            db.SaveChanges();
+
+            return CreatedAtRoute("DefaultApi", new { id = dossierReservation.ID }, dossierReservation);
+        }
+
         // PUT: api/DossiersReservation/5
+        /// <summary>
+        /// Permet de modifier un dossier de reservation
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="dossierReservation"></param>
+        /// <returns></returns>
         [ResponseType(typeof(void))]
         public IHttpActionResult PutDossierReservation(int id, DossierReservation dossierReservation)
         {
@@ -91,22 +134,12 @@ namespace BoVoyage_Projet3.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/DossiersReservation
-        [ResponseType(typeof(DossierReservation))]
-        public IHttpActionResult PostDossierReservation(DossierReservation dossierReservation)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.DossiersReservation.Add(dossierReservation);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = dossierReservation.ID }, dossierReservation);
-        }
-
         // DELETE: api/DossiersReservation/5
+        /// <summary>
+        /// Permet de supprimer un dossier de reservation
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [ResponseType(typeof(DossierReservation))]
         public IHttpActionResult DeleteDossierReservation(int id)
         {

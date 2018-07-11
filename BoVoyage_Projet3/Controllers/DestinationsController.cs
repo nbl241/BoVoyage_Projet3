@@ -18,12 +18,21 @@ namespace BoVoyage_Projet3.Controllers
         private BoVoyageDbContext db = new BoVoyageDbContext();
 
         // GET: api/Destinations
+        /// <summary>
+        /// Retourne la liste des destinations
+        /// </summary>
+        /// <returns></returns>
         public IQueryable<Destination> GetDestinations()
         {
             return db.Destinations;
         }
 
-        // GET: api/Destinations/5
+        // GET: api/Destinations/id
+        /// <summary>
+        /// Retourne une destination selon l'id spécifié
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [ResponseType(typeof(Destination))]
         public IHttpActionResult GetDestination(int id)
         {
@@ -37,6 +46,14 @@ namespace BoVoyage_Projet3.Controllers
         }
 
         // GET: api/Destinations/Search
+        /// <summary>
+        /// Permet de chercher une destination selon le paramètre spécifié
+        /// </summary>
+        /// <param name="continent"></param>
+        /// <param name="pays"></param>
+        /// <param name="region"></param>
+        /// <param name="description"></param>
+        /// <returns></returns>
         [Route("api/Destinations/search")]
         public IQueryable<Destination> GetSearch(string continent = "", string pays = "", string region = "", string description = "")
         {
@@ -56,7 +73,33 @@ namespace BoVoyage_Projet3.Controllers
             return t;
         }
 
+        // POST: api/Destinations
+        /// <summary>
+        /// Permet d'ajouter une destination
+        /// </summary>
+        /// <param name="destination"></param>
+        /// <returns></returns>
+        [ResponseType(typeof(Destination))]
+        public IHttpActionResult PostDestination(Destination destination)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            db.Destinations.Add(destination);
+            db.SaveChanges();
+
+            return CreatedAtRoute("DefaultApi", new { id = destination.ID }, destination);
+        }
+
         // PUT: api/Destinations/5
+        /// <summary>
+        /// Permet de modifier une destination
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="destination"></param>
+        /// <returns></returns>
         [ResponseType(typeof(void))]
         public IHttpActionResult PutDestination(int id, Destination destination)
         {
@@ -91,22 +134,12 @@ namespace BoVoyage_Projet3.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Destinations
-        [ResponseType(typeof(Destination))]
-        public IHttpActionResult PostDestination(Destination destination)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.Destinations.Add(destination);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = destination.ID }, destination);
-        }
-
         // DELETE: api/Destinations/5
+        /// <summary>
+        /// Permet de supprimer une destination
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [ResponseType(typeof(Destination))]
         public IHttpActionResult DeleteDestination(int id)
         {

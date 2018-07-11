@@ -18,12 +18,21 @@ namespace BoVoyage_Projet3.Controllers
         private BoVoyageDbContext db = new BoVoyageDbContext();
 
         // GET: api/AgenceVoyages
+        /// <summary>
+        /// Retourne la liste des agences
+        /// </summary>
+        /// <returns></returns>
         public IQueryable<AgenceVoyage> GetAgencesVoyage()
         {
             return db.AgencesVoyage;
         }
 
-        // GET: api/AgenceVoyages/5
+        // GET: api/AgenceVoyages/id
+        /// <summary>
+        /// Retourne le nom d'une agence selon l'id spécifié
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [ResponseType(typeof(AgenceVoyage))]
         public IHttpActionResult GetAgenceVoyage(int id)
         {
@@ -37,6 +46,11 @@ namespace BoVoyage_Projet3.Controllers
         }
 
         //GET: api/AgenceVoyages/search
+        /// <summary>
+        /// Permet de chercher une agence selon le nom spécifié
+        /// </summary>
+        /// <param name="nom"></param>
+        /// <returns></returns>
         [Route("api/AgenceVoyages/search")]
         public IQueryable<AgenceVoyage> GetSearch(string nom = "")
         {
@@ -47,7 +61,33 @@ namespace BoVoyage_Projet3.Controllers
             return t;
         }
 
+        // POST: api/AgenceVoyages
+        /// <summary>
+        /// Permet d'ajouter une agence
+        /// </summary>
+        /// <param name="agenceVoyage"></param>
+        /// <returns></returns>
+        [ResponseType(typeof(AgenceVoyage))]
+        public IHttpActionResult PostAgenceVoyage(AgenceVoyage agenceVoyage)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            db.AgencesVoyage.Add(agenceVoyage);
+            db.SaveChanges();
+
+            return CreatedAtRoute("DefaultApi", new { id = agenceVoyage.ID }, agenceVoyage);
+        }
+
         // PUT: api/AgenceVoyages/5
+        /// <summary>
+        /// Permet de modifier une agence
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="agenceVoyage"></param>
+        /// <returns></returns>
         [ResponseType(typeof(void))]
         public IHttpActionResult PutAgenceVoyage(int id, AgenceVoyage agenceVoyage)
         {
@@ -82,22 +122,12 @@ namespace BoVoyage_Projet3.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/AgenceVoyages
-        [ResponseType(typeof(AgenceVoyage))]
-        public IHttpActionResult PostAgenceVoyage(AgenceVoyage agenceVoyage)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.AgencesVoyage.Add(agenceVoyage);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = agenceVoyage.ID }, agenceVoyage);
-        }
-
         // DELETE: api/AgenceVoyages/5
+        /// <summary>
+        /// Permet de supprimer une agence
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [ResponseType(typeof(AgenceVoyage))]
         public IHttpActionResult DeleteAgenceVoyage(int id)
         {
