@@ -4,87 +4,48 @@
     <meta charset="utf-8" />
     <title>BoVoyage Intranet</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" />
-    <!-- permet au CSS de déterminer la résolution de l'écran en fonction du périphérique -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link rel="stylesheet" href="bootstrap-3.2.0-dist/css/bootstrap.css">
-    <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet">
-    <script src="bootstrap-3.2.0-dist/js/jquery-1.10.2.js"></script>
-    <script src="bootstrap-3.2.0-dist/js/bootstrap.js"></script>
-
-    <style>
-
-        body {
-            font-size: 12px;
-            font-family: Arial;
-            padding-top: 70px; /* décalage pour le menu de navigation */
-        }
-
-        footer {
-            margin-top: 30px;
-        }
-
-
-        /* affiche les zones en couleurs */
-        #content > div {
-            background-color: #f5f5f5;
-            box-shadow: inset 2px -2px 2px #DF3A01, inset -2px 2px 2px #DF3A01;
-            height: 2024px;
-        }
-
-
-        .row > div {
-            background-color: #f5f5f5;
-            box-shadow: inset 2px -2px 2px #DBA901, inset -2px 2px 2px #DBA901;
-        }
-    </style>
 </head>
 <body>
     <div>
         Intranet BoVoyage
     </div>
-    <!-- main content of the page -->
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation" id="navbar-defile">
-        <div class="container">
-            <div class="navbar-header">
-                <!-- le titre du menu visible -->
-                <a class="navbar-brand" href="#">Accueil</a>
-            </div>
-
-            <!-- pour le menu déroulant sur mobile -->
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu-navigation">
-                <span class="sr-only"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
             </button>
-
-                <ul class="nav navbar-nav">
-                    <li><a href="AgenceVoyage.html">Agences</a></li>
-                    <li><a href="#Client.html">Clients</a></li>
-                    <li><a href="#Participant.html">Participants</a></li>
-                    <li><a href="#destination.html">Destinations</a></li>
-                    <li><a href="#Voyage.html">Voyages</a></li>
-                    <li><a href="#DossierReservation.html">Dossiers Réservations</a></li>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="http://localhost:53494/Html/Home.html">Accueil<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="http://localhost:53494/Html/Agence.html">Agences</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="http://localhost:53494/Html/Client.html">Clients</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="http://localhost:53494/Html/participant.html">Participants</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="http://localhost:53494/Html/Destination.html">Destinations</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="http://localhost:53494/Html/Voyage.html">Voyages</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="http://localhost:53494/Html/DossiersReservation.html">Dossiers Réservations</a>
+                    </li>
                 </ul>
-
-                <!-- une zone de recherche -->
-                <form class="navbar-form navbar-right" role="search">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Rechercher">
-                    </div>
-                    <button type="submit" class="btn btn-default">Rechercher</button>
-                </form>
             </div>
-
-        </div>
-
-    </nav>
+        </nav>
+    </div>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js">
-                                                                                   // <img src="../image/logo_marron.svg">
+                                                    // <img src="../image/logo_marron.svg">
     </script>
 </body>
 </html>
