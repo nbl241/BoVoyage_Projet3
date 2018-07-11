@@ -6,9 +6,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" />
 </head>
 <body>
-    <header class="p-3 mb-2 bg-primary text-white"><h1>GESTION DES CLIENTS</h1></header>
+    <header class="p-3 mb-2 bg-primary text-white"><h1>GESTION DES AGENCES</h1></header>
 
-    <a title="ret" href="http://localhost:53494/Html/AgenceVoyage.html">
+    <a title="ret" href="http://localhost:53494/Html/AgenceVoyage/AgenceVoyage.html">
         AgenceVoyage
     </a> > Supprimer
 
@@ -54,16 +54,16 @@
                 method: 'GET',
 
                 success: function (data) {
-                    //alert(`aaaa`);
+
                     console.log(data);
                     if (data.Deleted) {
                         alert("L'agence n'existe pas !");
-                        window.location.href = "http://localhost:53494/Html/AgenceVoyage.html";
+                        window.location.href = "http://localhost:53494/Html/AgenceVoyage/AgenceVoyage.html";
                     }
                 },
                 error: function (error) {
                     alert("L'agence n'existe pas !");
-                    window.location.href = "http://localhost:53494/Html/AgenceVoyages.html";
+                    window.location.href = "http://localhost:53494/Html/AgenceVoyage/AgenceVoyages.html";
                 }
             });
 
@@ -76,11 +76,11 @@
                     success: function (data) {
                         console.log(data);
                         alert("Client supprimé !!!");
-                        window.location.href = "http://localhost:53494/Html/AgenceVoyage.html";
+                        window.location.href = "http://localhost:53494/Html/AgenceVoyage/AgenceVoyage.html";
                     },
                     error: function (error) {
                         alert("Error !");
-                        window.location.href = "http://localhost:53494/Html/AgenceVoyages.html";
+                        window.location.href = "http://localhost:53494/Html/AgenceVoyage/AgenceVoyages.html";
                     }
                 });
 

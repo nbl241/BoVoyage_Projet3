@@ -4,8 +4,6 @@
     <meta charset="utf-8" />
     <title>BoVoyage Intranet </title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
 </head>
 <body>
     <header class="p-3 mb-2 bg-primary text-white"><h1>GESTION DES VOYAGES</h1></header>
@@ -80,7 +78,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Date de Naissance</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="datepicker" placeholder="Entrer date de naissance...">
+                            <input type="date" class="form-control" id="inputeDateNaissance" placeholder="Entrer date de naissance...">
                         </div>
                     </div>
                     <div class="form-group">
@@ -98,16 +96,6 @@
             crossorigin="anonymous"></script>
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-    <script>
-        $(function () {
-            $("#datepicker").datepicker();
-        });
-    </script>
-
 
     <script>
         $(document).ready(function () {
@@ -137,7 +125,7 @@
                 let clientObj = {
                     Adresse: $("#inputAdresse").val(),
                     Civilite: "M",
-                    DateNaissance: $("#datepicker").val(),
+                    DateNaissance: $("#inputeDateNaissance").val(),
                     Email: $("#inputEmail").val(),
                     Nom: $("#inputNom").val(),
                     Prenom: $("#inputPrenom").val(),
@@ -147,27 +135,20 @@
                 console.log(clientObj);
 
                 $.ajax({
-                    url: "http://localhost:53494/api/clients",
+                    url: "http://localhost:53494/api/Voyages",
                     method: 'POST',
                     data: clientObj,
 
                     success: function (clientObj) {
                         alert(`Client Créé`);
                         console.log(clientObj);
-
                     },
                     error: function (error) {
                         alert('Problème de Error !!!');
                     }
-
                 });
-             
             });
         });
-
     </script>
-
-
-
 </body>
 </html>
