@@ -8,45 +8,26 @@
 
 </head>
 <body>
-
-    <div>
-        Intranet BoVoyage
-    </div>
-
-    <div>
-        <a title="MenuPrincipal" href="Home.html"> Retour au menu principal</a>
-    </div>
-
-    <div>
-        <h1>
-            GESTION DES CLIENTS > Supprimer
-        </h1>
-    </div>
+    <header class="p-3 mb-2 bg-primary text-white"><h1>GESTION DES CLIENTS</h1></header>
 
 
-    <div class="row">
-        <!-- header -->
-        <header class="col-3">
-            <div id="logo">
-
-            </div>
-            <nav class="navbar nav-tabs">
-                <ul class="navbar-nav">
-                    <li class="nav-item"><a href="Client.html" class="nav-link">Rechercher</a></li>
-                    <li class="nav-item"><a href="ClientAjouter.html" class="nav-link">Ajouter</a></li>
-
-                </ul>
-            </nav>
-        </header>
-
-    </div>
+    <a title="ret" href="http://localhost:53494/Html/Client.html">
+        Gestion des Clients
+    </a> > Supprimer
 
 
-    <div class="container">
+
+    <div class="container" id="Client">
         <div class="row">
             <div class="col-md-12">
+                <form class="form-horizontal" role="form">
 
-
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default">Confirmer la suppression</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -54,40 +35,73 @@
 
 
 
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+                crossorigin="anonymous"></script>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
-            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-            crossorigin="anonymous"></script>
-
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 
 
+        <script>
+            $(document).ready(function () {
 
-    <script>
-        $(document).ready(function () {
-
-            $.urlParam = function (name) {
-                var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-                if (results == null) {
-                    return null;
+                $.urlParam = function (name) {
+                    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+                    if (results == null) {
+                        return null;
+                    }
+                    else {
+                        return results[1] || 0;
+                    }
                 }
-                else {
-                    return results[1] || 0;
-                }
-            }
 
+                let idToDelete = $.urlParam("id");
+                // alert("Supprimer " + idToDelete);
 
-            alert("Supprimer " + $.urlParam("id"));
+                // requete GET Ajax pour vérifier si l'id existe
+                $.ajax({
+                    url: "http://localhost:53494/api/clients/" + idToDelete,
+                    method: 'GET',
 
-        });
+                    success: function (data) {
+                        //alert(`aaaa`);
+                        console.log(data);
+                        if (data.Deleted) {
+                            alert("Le client n'existe pas !");
+                            window.location.href = "http://localhost:53494/Html/Client.html";
+                        }
+                    },
+                    error: function (error) {
+                        alert("Le client n'existe pas !");
+                        window.location.href = "http://localhost:53494/Html/Client.html";
+                    }
+                });
 
-    </script>
+                $("form").submit(function (ev) {
+                    
+                    // requete GET Ajax delete(flaggé) le client
+                    $.ajax({
+                        url: "http://localhost:53494/api/clients/" + idToDelete,
+                        method: 'DELETE',
 
+                        success: function (data) {
+                            //alert(`aaaa`);
+                            console.log(data);
+                            alert("Client supprimé !!!");
+                            window.location.href = "http://localhost:53494/Html/Client.html";
+                        },
+                        error: function (error) {
+                            alert("Error !");
+                            window.location.href = "http://localhost:53494/Html/Client.html";
+                        }
+                    });
+              
+                    ev.preventDefault();
+                });
 
+            });
 
-
-
+        </script>
 
 </body>
 
