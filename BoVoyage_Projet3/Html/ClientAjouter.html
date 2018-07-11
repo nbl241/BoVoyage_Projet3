@@ -2,71 +2,212 @@
 <html>
 <head>
     <meta charset="utf-8" />
-
-
-
     <title>BoVoyage Intranet </title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" />
-
-
 </head>
 <body>
+    <header class="p-3 mb-2 bg-primary text-white"><h1>GESTION DES CLIENTS</h1></header>
 
-    <div>
-        Intranet BoVoyage
-    </div>
-
-    <div>
-        <a title="MenuPrincipal" href="Home.html"> Retour au menu principal</a>
-    </div>
-
-    <div>
-        <h1>
-            GESTION DES CLIENTS > Ajouter
-        </h1>
-    </div>
-
-
-    <div class="row">
-        <!-- header -->
-        <header class="col-3">
-            <div id="logo">
-
-            </div>
-            <nav class="navbar nav-tabs">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item"><a href="Client.html" class="nav-link">Rechercher</a></li>
-                    <li class="nav-item"><a href="ClientAjouter.html" class="nav-link">Ajouter</a></li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="http://localhost:53494/Html/Home.html">Accueil<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://localhost:53494/Html/AgenceVoyage.html">Agences</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://localhost:53494/Html/Client.html">Clients</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://localhost:53494/Html/participant.html">Participants</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://localhost:53494/Html/Destination.html">Destinations</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://localhost:53494/Html/Voyage.html">Voyages</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://localhost:53494/Html/DossierReservation.html">Dossiers Réservations</a>
+                    </li>
                 </ul>
-            </nav>
-        </header>
-
-
-
-
-
-        <!-- main content of the page -->
-        <main class="col-9">
-
-        </main>
-
-
-
-
+            </div>
+        </nav>
     </div>
 
+    <div class="container" id="Client">
+        <div class="row">
+            <div class="col-md-12">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Nom</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputNom" placeholder="Entrer nom...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Prenom</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputPrenom" placeholder="Entrer prenom...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Adresse</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputAdresse" placeholder="Entrer l'adresse...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Téléphone</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputTel" placeholder="Entrer numéro téléphone...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Email</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputEmail" placeholder="Entrer email...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Date de Naissance</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputDateNaissance" placeholder="Entrer date de naissance...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Age</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputAge" placeholder="Entrer l'age...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default">Rechercher</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Adresse</th>
+                    <th>Téléphone</th>
+                    <th>Email</th>
+                    <th>Date de Naissance</th>
+                    <th>Age</th>
+                    <th style="width: 32px"></th>
+                    <th style="width: 32px"></th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
 
+    </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
 
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 
-                                               // <img src="../image/logo_marron.svg">
+    <script>
+        $(document).ready(function () {
+            $("form").submit(function (ev) {
+
+                let clientObj = {
+                    Adresse: $("#inputAdresse").val(),
+                    Civilite: "M",
+                    DateNaissance: $("#inputDateNaissance").val(),
+                    Email: $("#inputEmail").val(),
+                    Nom: $("#inputNom").val(),
+                    Prenom: $("#inputPrenom").val(),
+                    Telephone: $("#inputTel").val()
+                }
+
+
+/*
+                           <input type="text" class="form-control" id="inputNom" placeholder="Entrer nom...">
+
+                            <input type="text" class="form-control" id="inputPrenom" placeholder="Entrer prenom...">
+
+                            <input type="text" class="form-control" id="inputAdresse" placeholder="Entrer l'adresse...">
+
+                            <input type="text" class="form-control" id="inputTel" placeholder="Entrer numéro téléphone...">
+
+                            <input type="text" class="form-control" id="inputEmail" placeholder="Entrer email...">
+
+                            <input type="text" class="form-control" id="inputDateNaissance" placeholder="Entrer date de naissance...">
+                    Name: $("#inputName").val(),
+                    Description: $("#inputDescription").val(),
+                    DeadLineDate: $("#inputDeadLine").val(),
+                    CategoryID: $("#inputCategoryID").val(),
+                    Done: $("#inputDone").is(':checked')
+                };
+
+*/
+
+                
+                $.ajax({
+                    url: "http://localhost:53494/api/clients",
+                    method: 'POST',
+                    data: clientObj,
+
+                    success: function (clientObj) {
+                        //alert(`aaaa`);
+                        console.log(clientObj);
+
+                    },
+                    error: function (error) {
+                        alert('Problème de Error !!!');
+                    }
+
+                });
+
+
+                ev.preventDefault();
+            });
+        });
+
     </script>
 
 
-</body>
 
+
+
+
+    let obj = {
+    Name: $("#inputName").val(),
+    Description: $("#inputDescription").val(),
+    DeadLineDate: $("#inputDeadLine").val(),
+    CategoryID: $("#inputCategoryID").val(),
+    Done: $("#inputDone").is(':checked')
+    };
+    //console.log(obj);
+
+    $.ajax({
+    url: 'http://localhost:63757/api/todos',
+    method: 'POST',
+    data: obj,
+    success: function (data) {
+    alert(`Todo enregistré avec l'ID ${data.ID}`);
+    }
+    });
+
+
+
+
+
+
+
+</body>
 </html>
