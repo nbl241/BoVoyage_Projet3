@@ -68,7 +68,7 @@
 
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-default">Submit</button>
+                            <button type="submit" class="btn btn-default">Rechercher</button>
                         </div>
                     </div>
 
@@ -77,6 +77,22 @@
 
             </div>
         </div>
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+
+
+        <button type="button" class="btn btn-primary" id="boutonModifier">Modifier</button>
+
+
     </div>
 
 
@@ -98,6 +114,17 @@
     <script>
 
         $(document).ready(function () {
+            let resultot;
+
+            $('#boutonModifier').click(function () {
+                let modiffeUrl = new URL("http://localhost:53494/html/ClientModifier.html");
+                modiffeUrl.searchParams.append("id", "1");
+                window.location.href = modiffeUrl;
+                return false;
+            });
+
+           
+
             $("form").submit(function (ev) {
 
                 // console.log(obj);
@@ -115,9 +142,19 @@
                     method: 'GET',
 
                     success: function (data) {
-                        alert(`aaaa`);
+                        //alert(`aaaa`);
                         console.log(data);
 
+                        for (let item of data) {
+                            let newRow = `<td>${item.Nom}</td><td>${item.Prenom}</td><td>${item.Email}</td>`;
+                            $("#tableBody").append(`<tr class="clickable-row" data-href="url://">${newRow}</tr>`);
+                        }
+
+                        $(".clickable-row").click(function () {
+                            alert('Error !!!');
+                            resultot = 0;
+                            //window.location = $(this).data("href");
+                        });
 
                     },
                     error: function (error) {
@@ -132,12 +169,6 @@
 
     </script>
 
-
-    <select name="select2" size="20">
-        <option>cerise</option>
-        <option>orange</option>
-        <option>pomme</option>
-    </select>
 
 
 </body>
