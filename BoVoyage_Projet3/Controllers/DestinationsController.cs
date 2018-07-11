@@ -87,6 +87,11 @@ namespace BoVoyage_Projet3.Controllers
                 return BadRequest(ModelState);
             }
 
+            // Validations 
+            if (destination.Description.Trim() == "") return BadRequest();
+
+
+
             db.Destinations.Add(destination);
             db.SaveChanges();
 

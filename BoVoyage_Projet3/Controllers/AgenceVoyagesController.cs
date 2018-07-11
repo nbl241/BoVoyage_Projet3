@@ -75,6 +75,9 @@ namespace BoVoyage_Projet3.Controllers
                 return BadRequest(ModelState);
             }
 
+            // Validations 
+            if (agenceVoyage.Nom.Trim() == "") return BadRequest();
+
             db.AgencesVoyage.Add(agenceVoyage);
             db.SaveChanges();
 

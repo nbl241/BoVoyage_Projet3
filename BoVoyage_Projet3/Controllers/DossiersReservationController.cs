@@ -87,6 +87,9 @@ namespace BoVoyage_Projet3.Controllers
                 return BadRequest(ModelState);
             }
 
+            // Validations 
+            if (dossierReservation.NumeroCarteBancaire.Trim() == "") return BadRequest();
+
             db.DossiersReservation.Add(dossierReservation);
             db.SaveChanges();
 

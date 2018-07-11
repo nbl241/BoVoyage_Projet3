@@ -91,6 +91,10 @@ namespace BoVoyage_Projet3.Controllers
                 return BadRequest(ModelState);
             }
 
+            // Validations 
+            if (participant.Nom.Trim() == "") return BadRequest();
+
+
             db.Participants.Add(participant);
             db.SaveChanges();
 

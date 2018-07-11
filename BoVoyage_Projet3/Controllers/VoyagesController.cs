@@ -95,6 +95,9 @@ namespace BoVoyage_Projet3.Controllers
                 return BadRequest(ModelState);
             }
 
+            // Validations 
+            if (voyage.DateAller > voyage.DateRetour) return BadRequest();
+
             db.Voyages.Add(voyage);
             db.SaveChanges();
 
