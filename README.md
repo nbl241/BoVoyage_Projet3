@@ -5,7 +5,7 @@ Il nous rest à faire :
 
   -la modification des formulaires
   
-  -verifier et améliorer la gestion des dossiers de reservation (assurance, etat des dossiers et raison annulation)
+  -verifier et améliorer la gestion des dossiers de reservation (assurance, état des dossiers et raison annulation)
   
   -quelques validations
   
