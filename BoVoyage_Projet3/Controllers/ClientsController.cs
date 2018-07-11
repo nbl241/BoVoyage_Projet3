@@ -24,7 +24,7 @@ namespace BoVoyage_Projet3.Controllers
         /// <returns></returns>
         public IQueryable<Client> GetClients()
         {
-            return db.Clients;
+            return db.Clients.Where(x => !x.Deleted);
         }
 
         // GET: api/Clients/id
@@ -116,11 +116,15 @@ namespace BoVoyage_Projet3.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != client.ID)
-            {
-                return BadRequest();
-            }
+            if (id != client.ID) return BadRequest();
+            
+            // Validations 
+            if (client.Nom.Trim() == "") return BadRequest();
 
+            if (client.DateNaissance >= DateTime.Today) return BadRequest();
+
+
+            // Enregistrement en base
             db.Entry(client).State = System.Data.Entity.EntityState.Modified;
 
             try
@@ -157,7 +161,10 @@ namespace BoVoyage_Projet3.Controllers
                 return NotFound();
             }
 
-            db.Clients.Remove(client);
+            // db.Clients.Remove(client);
+            client.Deleted = true;
+            client.DeletedAt = DateTime.Now;
+            db.Entry(client).State = System.Data.Entity.EntityState.Modified;        
             db.SaveChanges();
 
             return Ok(client);

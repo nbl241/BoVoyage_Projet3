@@ -24,7 +24,7 @@ namespace BoVoyage_Projet3.Controllers
         /// <returns></returns>
         public IQueryable<Destination> GetDestinations()
         {
-            return db.Destinations;
+            return db.Destinations.Where(x => !x.Deleted);
         }
 
         // GET: api/Destinations/id
@@ -86,6 +86,11 @@ namespace BoVoyage_Projet3.Controllers
             {
                 return BadRequest(ModelState);
             }
+
+            // Validations 
+            if (destination.Description.Trim() == "") return BadRequest();
+
+
 
             db.Destinations.Add(destination);
             db.SaveChanges();
@@ -149,7 +154,10 @@ namespace BoVoyage_Projet3.Controllers
                 return NotFound();
             }
 
-            db.Destinations.Remove(destination);
+            // db.Destinations.Remove(destination);
+            destination.Deleted = true;
+            destination.DeletedAt = DateTime.Now;
+            db.Entry(destination).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
 
             return Ok(destination);

@@ -24,7 +24,7 @@ namespace BoVoyage_Projet3.Controllers
         /// <returns></returns>
         public IQueryable<AgenceVoyage> GetAgencesVoyage()
         {
-            return db.AgencesVoyage;
+            return db.AgencesVoyage.Where(x => !x.Deleted);
         }
 
         // GET: api/AgenceVoyages/id
@@ -74,6 +74,9 @@ namespace BoVoyage_Projet3.Controllers
             {
                 return BadRequest(ModelState);
             }
+
+            // Validations 
+            if (agenceVoyage.Nom.Trim() == "") return BadRequest();
 
             db.AgencesVoyage.Add(agenceVoyage);
             db.SaveChanges();
@@ -137,7 +140,10 @@ namespace BoVoyage_Projet3.Controllers
                 return NotFound();
             }
 
-            db.AgencesVoyage.Remove(agenceVoyage);
+            // db.AgencesVoyage.Remove(agenceVoyage);
+            agenceVoyage.Deleted = true;
+            agenceVoyage.DeletedAt = DateTime.Now;
+            db.Entry(agenceVoyage).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
 
             return Ok(agenceVoyage);

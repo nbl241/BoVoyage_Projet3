@@ -24,7 +24,7 @@ namespace BoVoyage_Projet3.Controllers
         /// <returns></returns>
         public IQueryable<Participant> GetParticipants()
         {
-            return db.Participants;
+            return db.Participants.Where(x => !x.Deleted);
         }
 
         // GET: api/Participants/id
@@ -91,6 +91,10 @@ namespace BoVoyage_Projet3.Controllers
                 return BadRequest(ModelState);
             }
 
+            // Validations 
+            if (participant.Nom.Trim() == "") return BadRequest();
+
+
             db.Participants.Add(participant);
             db.SaveChanges();
 
@@ -153,7 +157,10 @@ namespace BoVoyage_Projet3.Controllers
                 return NotFound();
             }
 
-            db.Participants.Remove(participant);
+            // db.Participants.Remove(participant);
+            participant.Deleted = true;
+            participant.DeletedAt = DateTime.Now;
+            db.Entry(participant).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
 
             return Ok(participant);

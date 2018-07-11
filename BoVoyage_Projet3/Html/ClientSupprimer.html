@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    <title>BoVoyage Intranet </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" />
+
+</head>
+<body>
+
+    <div>
+        Intranet BoVoyage
+    </div>
+
+    <div>
+        <a title="MenuPrincipal" href="Home.html"> Retour au menu principal</a>
+    </div>
+
+    <div>
+        <h1>
+            GESTION DES CLIENTS > Supprimer
+        </h1>
+    </div>
+
+
+    <div class="row">
+        <!-- header -->
+        <header class="col-3">
+            <div id="logo">
+
+            </div>
+            <nav class="navbar nav-tabs">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a href="Client.html" class="nav-link">Rechercher</a></li>
+                    <li class="nav-item"><a href="ClientAjouter.html" class="nav-link">Ajouter</a></li>
+
+                </ul>
+            </nav>
+        </header>
+
+    </div>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+
+
+
+
+    <script>
+        $(document).ready(function () {
+
+            $.urlParam = function (name) {
+                var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+                if (results == null) {
+                    return null;
+                }
+                else {
+                    return results[1] || 0;
+                }
+            }
+
+
+            alert("Supprimer " + $.urlParam("id"));
+
+        });
+
+    </script>
+
+
+
+
+
+
+</body>
+
+</html>
