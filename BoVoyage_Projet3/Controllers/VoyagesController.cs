@@ -24,7 +24,7 @@ namespace BoVoyage_Projet3.Controllers
         /// <returns></returns>
         public IQueryable<Voyage> GetVoyages()
         {
-            return db.Voyages;
+            return db.Voyages.Where(x => !x.Deleted);
         }
 
         // GET: api/Voyages/id
@@ -157,7 +157,10 @@ namespace BoVoyage_Projet3.Controllers
                 return NotFound();
             }
 
-            db.Voyages.Remove(voyage);
+            // db.Voyages.Remove(voyage);
+            voyage.Deleted = true;
+            voyage.DeletedAt = DateTime.Now;
+            db.Entry(voyage).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
 
             return Ok(voyage);

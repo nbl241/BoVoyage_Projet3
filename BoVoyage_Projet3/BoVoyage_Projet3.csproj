@@ -102,6 +102,7 @@
     <Content Include="Html\Client.html" />
     <Content Include="Html\ClientAjouter.html" />
     <Content Include="Html\ClientModifier.html" />
+    <Content Include="Html\ClientSupprimer.html" />
     <Content Include="Html\Destination.html" />
     <Content Include="Html\DossierReservation.html" />
     <Content Include="Html\Home.html" />

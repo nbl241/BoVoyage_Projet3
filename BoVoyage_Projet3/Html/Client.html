@@ -90,39 +90,29 @@
             </thead>
             <tbody id="tableBody"></tbody>
         </table>
-        <!-->
-            <button type="button" class="btn btn-primary" id="boutonModifier">Modifier</button>
-        <-->
-    </div>
-
     
+        <p id="loadingLabel">Chargement en cours...</p>
+
+    </div>
+   
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
 
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js">
-
-        // <img src="../image/logo_marron.svg">
-    </script>
-
-
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 
 
     <script>
-
         $(document).ready(function () {
+            $('.table').hide();
+            $('#loadingLabel').hide();
+
             let resultot = 0;
-            /*
-            $('#boutonModifier').click(function () {
-                if (resultot == 0) { alert(`Hého! === 0 !!!`);}
-                let modiffeUrl = new URL("http://localhost:53494/html/ClientModifier.html");
-                modiffeUrl.searchParams.append("id", resultot);
-                window.location.href = modiffeUrl;
-                return false;
-            });
-            */
-            $("form").submit(function (ev) {
+          
+            $("form").submit(function (ev) {           
+                // Préparation de  l'url de recherche
+                $('#loadingLabel').show();
 
                 let searchurl = new URL("http://localhost:53494/api/clients/search");
                 searchurl.searchParams.append("nom", $("#inputName").val());
@@ -130,15 +120,16 @@
 
                 console.log(searchurl);
 
-
+                // requete GET Ajax piur la recherche
                 $.ajax({
                     url: searchurl,
                     method: 'GET',
 
                     success: function (data) {
-                        //alert(`aaaa`);
+                         //alert(`aaaa`);
                         console.log(data);
 
+                        $('.table').show();
                         $("#tableBody").empty();
 
                         for (let item of data) {
@@ -151,11 +142,9 @@
                             
                             if (newId != resultot) {
                                 resultot = newId;
-
+                              
                                 $('#smalledit').remove(); $('#smalldelete').remove();
-
-                                // alert(resultot);                               
-
+                                       
                                 let btnEdit = `<button type="button" class="btn btn-warning btn-xs>"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACySURBVDhP1dFLDgFBFEbhWgFrESIhBgxEEPGIGYskbIiO54wwd063eVVPJP7kS7o6XbfurQ5/lSkyHDH0RZkscUEDHVgoOQu84MlN1HFAUia4ooYx3HjGDNGMcIdtG4u84TjRDHCDLRvbtpN5voqkDy+sla+KIhZznGi68GNv2rTh2nGiqeCJEzzVIm52nKSssIOnedNudpzkbOD/3sNOekiO7T+wxfq7LhU3VIvHnyaED6KaJDJvn/naAAAAAElFTkSuQmCC"></button>`;
                                 let btnDel  = `<button type="button" class="btn btn-warning btn-xs"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABLSURBVDhPY6AVaAXin0D8H0q3ADFJAKRJEMIE0yA+QQCyjViME+CVBAJC8nAFhGicYNSAwWAAcgpEB0SlSOQ8gI5B4k1APKgAAwMA0Fw/578RhNEAAAAASUVORK5CYII="></button>`;
 
@@ -175,25 +164,22 @@
                                     return false;
                                 });
 
-
                                 if ($(this).hasClass('bg-info')) {
                                     $(this).removeClass('bg-info');
 
                                 } else {
                                     $(this).addClass('bg-info').siblings().removeClass('bg-info');
-
-                                }
-                                
+                                }                                
                             }
                         });
-
                       
                     },
                     error: function (error) {
-                        alert('Error !!!');
+                        alert('Problème de Error !!!');
                     }
 
                 });
+                $('#loadingLabel').hide();
 
                 ev.preventDefault();
             });

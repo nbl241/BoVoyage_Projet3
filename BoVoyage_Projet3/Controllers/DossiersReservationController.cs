@@ -24,7 +24,7 @@ namespace BoVoyage_Projet3.Controllers
         /// <returns></returns>
         public IQueryable<DossierReservation> GetDossiersReservation()
         {
-            return db.DossiersReservation;
+            return db.DossiersReservation.Where(x => !x.Deleted);
         }
 
         // GET: api/DossiersReservation/id
@@ -149,7 +149,10 @@ namespace BoVoyage_Projet3.Controllers
                 return NotFound();
             }
 
-            db.DossiersReservation.Remove(dossierReservation);
+            // db.DossiersReservation.Remove(dossierReservation);
+            dossierReservation.Deleted = true;
+            dossierReservation.DeletedAt = DateTime.Now;
+            db.Entry(dossierReservation).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
 
             return Ok(dossierReservation);
