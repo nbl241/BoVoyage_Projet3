@@ -4,6 +4,8 @@
     <meta charset="utf-8" />
     <title>BoVoyage Intranet </title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
 </head>
 <body>
     <header class="p-3 mb-2 bg-primary text-white"><h1>Gestion des voyages</h1></header>
@@ -19,22 +21,22 @@
                         <a class="nav-link" href="http://localhost:53494/Html/Home.html">Accueil<span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost:53494/Html/AgenceVoyage.html">Agences</a>
+                        <a class="nav-link" href="http://localhost:53494/Html/AgenceVoyages.html">Agences</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost:53494/Html/Client.html">Clients</a>
+                        <a class="nav-link" href="http://localhost:53494/Html/Clients.html">Clients</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost:53494/Html/participant.html">Participants</a>
+                        <a class="nav-link" href="http://localhost:53494/Html/participants.html">Participants</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost:53494/Html/Destination.html">Destinations</a>
+                        <a class="nav-link" href="http://localhost:53494/Html/Destinations.html">Destinations</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost:53494/Html/Voyage.html">Voyages</a>
+                        <a class="nav-link" href="http://localhost:53494/Html/Voyages.html">Voyages</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost:53494/Html/DossierReservation.html">Dossiers Réservations</a>
+                        <a class="nav-link" href="http://localhost:53494/Html/DossiersReservation.html">Dossiers Réservations</a>
                     </li>
                 </ul>
             </div>
@@ -48,13 +50,13 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Date aller</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="inputDateAller" placeholder="Entrer Date aller...">
+                            <input type="text" class="form-control" id="datepicker" placeholder="Entrer Date aller...">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Date retour</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="inputDateRetour" placeholder="Entrer date retour...">
+                            <input type="text" class="form-control" id="datepicker" placeholder="Entrer date retour...">
                         </div>
                     </div>
                     <div class="form-group">
@@ -108,21 +110,29 @@
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
 
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 
     <script>
+        $(function () {
+            $("#datepicker").datepicker();
+        });
+    </script>
+
+    <script>
         $(document).ready(function () {
-            let resultot = 0;
-            $('#boutonModifier').click(function () {
-                if (resultot == 0) { alert(`Erreur !!!`); }
-                let modiffeUrl = new URL("http://localhost:53494/html/VoyageModifier.html");
-                modiffeUrl.searchParams.append("id", resultot);
-                window.location.href = modiffeUrl;
-                return false;
-            });
+            $('.table').hide();
+            $('#loadingLabel').hide();
+
+            let resultat = 0;
 
             $("form").submit(function (ev) {
-                let searchurl = new URL("http://localhost:53494/api/Voyage/search");
+                // Préparation de  l'url de recherche
+                $('#loadingLabel').show();
+
+                let searchurl = new URL("http://localhost:53494/api/Voyages/search");
                 searchurl.searchParams.append("dateAller", $("#inputDateAller").val());
                 searchurl.searchParams.append("dateRetour", $("#inputDateRetour").val());
                 searchurl.searchParams.append("placeDisponible", $("#inputPlaceDisponible").val());
@@ -132,6 +142,7 @@
 
                 console.log(searchurl);
 
+                // requete GET Ajax piur la recherche
                 $.ajax({
                     url: searchurl,
                     method: 'GET',
@@ -139,21 +150,47 @@
                     success: function (data) {
                         console.log(data);
 
+                        $('.table').show();
                         $("#tableBody").empty();
 
                         for (let item of data) {
-                            let newRow = `<td>${item.DateAller}</td><td>${item.DateRetour}</td><td>${item.PlacesDisponibles}</td><td>${item.TarifToutCompris}</td><td>${item.IdAgenceVoyage}</td><td>${item.IdDestination}</td>`;
-                            $("#tableBody").append(`<tr class="clickable-row " data-href="${item.ID}">${newRow}</tr>`);
+                            let newRow = `<td>${item.DateAller}</td><td>${item.DateRetour}</td><td>${item.PlaceDisponible}</td><td>${item.TarifToutCompris}</td><td>${item.IdAgenceVoyage}</td><td>${item.IdDestination}</td>`;
+                            $("#tableBody").append(`<tr class="clickable-row" data-href="${item.ID}">${newRow}</tr>`);
                         }
 
                         $(".clickable-row").click(function () {
-                            resultot = $(this).data("href");
+                            newId = $(this).data("href");
 
-                            if ($(this).hasClass('bg-success')) {
-                                $(this).removeClass('bg-success');
+                            if (newId != resultat) {
+                                resultat = newId;
 
-                            } else {
-                                $(this).addClass('bg-success').siblings().removeClass('bg-success');
+                                $('#smalledit').remove(); $('#smalldelete').remove();
+
+                                let btnEdit = `<button type="button" class="btn btn-warning btn-xs>"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACySURBVDhP1dFLDgFBFEbhWgFrESIhBgxEEPGIGYskbIiO54wwd063eVVPJP7kS7o6XbfurQ5/lSkyHDH0RZkscUEDHVgoOQu84MlN1HFAUia4ooYx3HjGDNGMcIdtG4u84TjRDHCDLRvbtpN5voqkDy+sla+KIhZznGi68GNv2rTh2nGiqeCJEzzVIm52nKSssIOnedNudpzkbOD/3sNOekiO7T+wxfq7LhU3VIvHnyaED6KaJDJvn/naAAAAAElFTkSuQmCC"></button>`;
+                                let btnDel = `<button type="button" class="btn btn-warning btn-xs"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABLSURBVDhPY6AVaAXin0D8H0q3ADFJAKRJEMIE0yA+QQCyjViME+CVBAJC8nAFhGicYNSAwWAAcgpEB0SlSOQ8gI5B4k1APKgAAwMA0Fw/578RhNEAAAAASUVORK5CYII="></button>`;
+
+                                $(this).append(`<td id="smalledit">${btnEdit}</td><td id="smalldelete">${btnDel}</td>`);
+
+                                $('#smalledit').click(function () {
+                                    let modiffeUrl = new URL("http://localhost:53494/html/VoyagesModifier.html");
+                                    modiffeUrl.searchParams.append("id", resultat);
+                                    window.location.href = modiffeUrl;
+                                    return false;
+                                });
+
+                                $('#smalldelete').click(function () {
+                                    let modiffeUrl = new URL("http://localhost:53494/html/VoyagesSupprimer.html");
+                                    modiffeUrl.searchParams.append("id", resultat);
+                                    window.location.href = modiffeUrl;
+                                    return false;
+                                });
+
+                                if ($(this).hasClass('bg-info')) {
+                                    $(this).removeClass('bg-info');
+
+                                } else {
+                                    $(this).addClass('bg-info').siblings().removeClass('bg-info');
+                                }
                             }
                         });
                     },
@@ -161,6 +198,8 @@
                         alert('Erreur !!!');
                     }
                 });
+                $('#loadingLabel').hide();
+
                 ev.preventDefault();
             });
         });

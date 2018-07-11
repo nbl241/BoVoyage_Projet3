@@ -19,36 +19,41 @@
                         <a class="nav-link" href="http://localhost:53494/Html/Home.html">Accueil<span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost:53494/Html/AgenceVoyage.html">Agences</a>
+                        <a class="nav-link" href="http://localhost:53494/Html/AgenceVoyages.html">Agences</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost:53494/Html/Client.html">Clients</a>
+                        <a class="nav-link" href="http://localhost:53494/Html/Clients.html">Clients</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost:53494/Html/participant.html">Participants</a>
+                        <a class="nav-link" href="http://localhost:53494/Html/participants.html">Participants</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost:53494/Html/Destination.html">Destinations</a>
+                        <a class="nav-link" href="http://localhost:53494/Html/Destinations.html">Destinations</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost:53494/Html/Voyage.html">Voyages</a>
+                        <a class="nav-link" href="http://localhost:53494/Html/Voyages.html">Voyages</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost:53494/Html/DossierReservation.html">Dossiers Réservations</a>
+                        <a class="nav-link" href="http://localhost:53494/Html/DossiersReservation.html">Dossiers Réservations</a>
                     </li>
                 </ul>
             </div>
         </nav>
     </div>
 
-    <div class="container" id="Client">
+    <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <form class="form-horizontal" role="form">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">Nom</label>
+                        <label class="col-sm-2 control-label">Nom de l'agence</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="inputNom" placeholder="Entrer nom...">
+                            <input type="text" class="form-control" id="inputNomAgenceVoyage" placeholder="Entrer nom agence voyage...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default">Rechercher</button>
                         </div>
                     </div>
                 </form>
@@ -62,6 +67,9 @@
             </thead>
             <tbody id="tableBody"></tbody>
         </table>
+
+        <p id="loadingLabel">Chargement en cours...</p>
+
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -71,53 +79,79 @@
 
     <script>
         $(document).ready(function () {
-            let resultot = 0;
-            $('#boutonModifier').click(function () {
-                if (resultot == 0) { alert(`Erreur !!!`); }
-                let modiffeUrl = new URL("http://localhost:53494/html/AgenceVoyageModifier.html");
-                modiffeUrl.searchParams.append("id", resultot);
-                window.location.href = modiffeUrl;
-                return false;
-            });
+                $('.table').hide();
+                $('#loadingLabel').hide();
 
-            $("form").submit(function (ev) {
-                let searchurl = new URL("http://localhost:53494/api/AgenceVoyage/search");
-                searchurl.searchParams.append("nom", $("#inputNom").val());
+                let resultat = 0;
 
-                console.log(searchurl);
+                $("form").submit(function (ev) {
+                    // Préparation de  l'url de recherche
+                    $('#loadingLabel').show();
 
-                $.ajax({
-                    url: searchurl,
-                    method: 'GET',
+                    let searchurl = new URL("http://localhost:53494/api/AgenceVoyages/search");
+                    searchurl.searchParams.append("nom", $("#inputNomAgenceVoyage").val());
 
-                    success: function (data) {
-                        console.log(data);
+                    console.log(searchurl);
 
-                        $("#tableBody").empty();
+                    // requete GET Ajax piur la recherche
+                    $.ajax({
+                        url: searchurl,
+                        method: 'GET',
 
-                        for (let item of data) {
-                            let newRow = `<td>${item.Nom}</td>`;
-                            $("#tableBody").append(`<tr class="clickable-row " data-href="${item.ID}">${newRow}</tr>`);
-                        }
+                        success: function (data) {
+                            console.log(data);
 
-                        $(".clickable-row").click(function () {
-                            resultot = $(this).data("href");
+                            $('.table').show();
+                            $("#tableBody").empty();
 
-                            if ($(this).hasClass('bg-success')) {
-                                $(this).removeClass('bg-success');
-
-                            } else {
-                                $(this).addClass('bg-success').siblings().removeClass('bg-success');
+                            for (let item of data) {
+                                let newRow = `<td>${item.Nom}</td>`;
+                                $("#tableBody").append(`<tr class="clickable-row " data-href="${item.ID}">${newRow}</tr>`);
                             }
-                        });
-                    },
-                    error: function (error) {
-                        alert('Erreur !!!');
-                    }
+
+                            $(".clickable-row").click(function () {
+                                newId = $(this).data("href");
+
+                                if (newId != resultat) {
+                                    resultat = newId;
+
+                                    $('#smalledit').remove(); $('#smalldelete').remove();
+
+                                    let btnEdit = `<button type="button" class="btn btn-warning btn-xs>"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACySURBVDhP1dFLDgFBFEbhWgFrESIhBgxEEPGIGYskbIiO54wwd063eVVPJP7kS7o6XbfurQ5/lSkyHDH0RZkscUEDHVgoOQu84MlN1HFAUia4ooYx3HjGDNGMcIdtG4u84TjRDHCDLRvbtpN5voqkDy+sla+KIhZznGi68GNv2rTh2nGiqeCJEzzVIm52nKSssIOnedNudpzkbOD/3sNOekiO7T+wxfq7LhU3VIvHnyaED6KaJDJvn/naAAAAAElFTkSuQmCC"></button>`;
+                                    let btnDel = `<button type="button" class="btn btn-warning btn-xs"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABLSURBVDhPY6AVaAXin0D8H0q3ADFJAKRJEMIE0yA+QQCyjViME+CVBAJC8nAFhGicYNSAwWAAcgpEB0SlSOQ8gI5B4k1APKgAAwMA0Fw/578RhNEAAAAASUVORK5CYII="></button>`;
+
+                                    $(this).append(`<td id="smalledit">${btnEdit}</td><td id="smalldelete">${btnDel}</td>`);
+
+                                    $('#smalledit').click(function () {
+                                        let modiffeUrl = new URL("http://localhost:53494/html/AgenceVoyagetModifier.html");
+                                        modiffeUrl.searchParams.append("id", resultat);
+                                        window.location.href = modiffeUrl;
+                                        return false;
+                                    });
+
+                                    $('#smalldelete').click(function () {
+                                        let modiffeUrl = new URL("http://localhost:53494/html/AgenceVoyageSupprimer.html");
+                                        modiffeUrl.searchParams.append("id", resultat);
+                                        window.location.href = modiffeUrl;
+                                        return false;
+                                    });
+
+                                    if ($(this).hasClass('bg-info')) {
+                                        $(this).removeClass('bg-info');
+
+                                    } else {
+                                        $(this).addClass('bg-info').siblings().removeClass('bg-info');
+                                    }
+                                }
+                            });
+                        },
+                        error: function (error) {
+                            alert('Erreur !!!');
+                        }
+                    });
+                    ev.preventDefault();
                 });
-                ev.preventDefault();
             });
-        });
     </script>
 
 </body>

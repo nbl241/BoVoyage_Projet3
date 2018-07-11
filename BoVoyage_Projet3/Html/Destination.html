@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" />
 </head>
 <body>
-    <header class="p-3 mb-2 bg-primary text-white"><h1>Gestion des destinations</h1></header>
+    <header class="p-3 mb-2 bg-primary text-white"><h1>GESTION DES DESTINATIONS</h1></header>
 
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -19,26 +19,80 @@
                         <a class="nav-link" href="http://localhost:53494/Html/Home.html">Accueil<span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost:53494/Html/AgenceVoyage.html">Agences</a>
+                        <a class="nav-link" href="http://localhost:53494/Html/AgenceVoyages.html">Agences</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost:53494/Html/Client.html">Clients</a>
+                        <a class="nav-link" href="http://localhost:53494/Html/Clients.html">Clients</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost:53494/Html/participant.html">Participants</a>
+                        <a class="nav-link" href="http://localhost:53494/Html/participants.html">Participants</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost:53494/Html/Destination.html">Destinations</a>
+                        <a class="nav-link" href="http://localhost:53494/Html/Destinations.html">Destinations</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost:53494/Html/Voyage.html">Voyages</a>
+                        <a class="nav-link" href="http://localhost:53494/Html/Voyages.html">Voyages</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost:53494/Html/DossierReservation.html">Dossiers Réservations</a>
+                        <a class="nav-link" href="http://localhost:53494/Html/DossiersReservation.html">Dossiers Réservations</a>
                     </li>
                 </ul>
             </div>
         </nav>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Continent</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputContinent" placeholder="Entrer continent...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Pays</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputPays" placeholder="Entrer pays...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Region</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputRegion" placeholder="Entrer region...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Description</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputDescription" placeholder="Entrer une description...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default">Rechercher</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Continent</th>
+                    <th>Pays</th>
+                    <th>Adresse</th>
+                    <th>Decription</th>
+                    <th style="width: 32px"></th>
+                    <th style="width: 32px"></th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+
+        <p id="loadingLabel">Chargement en cours...</p>
+
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -47,7 +101,86 @@
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 
+    <script>
+        $(document).ready(function () {
+            $('.table').hide();
+            $('#loadingLabel').hide();
 
+            let resultat = 0;
+
+            $("form").submit(function (ev) {
+                // Préparation de  l'url de recherche
+                $('#loadingLabel').show();
+
+                let searchurl = new URL("http://localhost:53494/api/Destinations/search");
+                searchurl.searchParams.append("contient", $("#inputContinent").val());
+                searchurl.searchParams.append("pays", $("#inputPays").val());
+                searchurl.searchParams.append("region", $("#inputRegion").val());
+                searchurl.searchParams.append("description", $("#inputDescription").val());
+
+                console.log(searchurl);
+
+                // requete GET Ajax piur la recherche
+                $.ajax({
+                    url: searchurl,
+                    method: 'GET',
+
+                    success: function (data) {
+                        console.log(data);
+
+                        $('.table').show();
+                        $("#tableBody").empty();
+
+                        for (let item of data) {
+                            let newRow = `<td>${item.Continent}</td><td>${item.Pays}</td><td>${item.Region}</td><td>${item.Description}</td>`;
+                            $("#tableBody").append(`<tr class="clickable-row" data-href="${item.ID}">${newRow}</tr>`);
+                        }
+
+                        $(".clickable-row").click(function () {
+                            newId = $(this).data("href");
+
+                            if (newId != resultat) {
+                                resultat = newId;
+
+                                $('#smalledit').remove(); $('#smalldelete').remove();
+
+                                let btnEdit = `<button type="button" class="btn btn-warning btn-xs>"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACySURBVDhP1dFLDgFBFEbhWgFrESIhBgxEEPGIGYskbIiO54wwd063eVVPJP7kS7o6XbfurQ5/lSkyHDH0RZkscUEDHVgoOQu84MlN1HFAUia4ooYx3HjGDNGMcIdtG4u84TjRDHCDLRvbtpN5voqkDy+sla+KIhZznGi68GNv2rTh2nGiqeCJEzzVIm52nKSssIOnedNudpzkbOD/3sNOekiO7T+wxfq7LhU3VIvHnyaED6KaJDJvn/naAAAAAElFTkSuQmCC"></button>`;
+                                let btnDel = `<button type="button" class="btn btn-warning btn-xs"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABLSURBVDhPY6AVaAXin0D8H0q3ADFJAKRJEMIE0yA+QQCyjViME+CVBAJC8nAFhGicYNSAwWAAcgpEB0SlSOQ8gI5B4k1APKgAAwMA0Fw/578RhNEAAAAASUVORK5CYII="></button>`;
+
+                                $(this).append(`<td id="smalledit">${btnEdit}</td><td id="smalldelete">${btnDel}</td>`);
+
+                                $('#smalledit').click(function () {
+                                    let modiffeUrl = new URL("http://localhost:53494/html/DestinationModifier.html");
+                                    modiffeUrl.searchParams.append("id", resultat);
+                                    window.location.href = modiffeUrl;
+                                    return false;
+                                });
+
+                                $('#smalldelete').click(function () {
+                                    let modiffeUrl = new URL("http://localhost:53494/html/DestinationSupprimer.html");
+                                    modiffeUrl.searchParams.append("id", resultat);
+                                    window.location.href = modiffeUrl;
+                                    return false;
+                                });
+
+                                if ($(this).hasClass('bg-info')) {
+                                    $(this).removeClass('bg-info');
+
+                                } else {
+                                    $(this).addClass('bg-info').siblings().removeClass('bg-info');
+                                }
+                            }
+                        });
+                    },
+                    error: function (error) {
+                        alert('Erreur !!!');
+                    }
+                });
+                $('#loadingLabel').hide();
+
+                ev.preventDefault();
+            });
+        });
+    </script>
 </body>
-
 </html>
