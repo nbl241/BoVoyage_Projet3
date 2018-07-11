@@ -19,33 +19,168 @@
                         <a class="nav-link" href="http://localhost:53494/Html/Home.html">Accueil<span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost:53494/Html/AgenceVoyages.html">Agences</a>
+                        <a class="nav-link" href="http://localhost:53494/Html/AgenceVoyage.html">Agences</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost:53494/Html/Clients.html">Clients</a>
+                        <a class="nav-link" href="http://localhost:53494/Html/Client.html">Clients</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost:53494/Html/participants.html">Participants</a>
+                        <a class="nav-link" href="http://localhost:53494/Html/participant.html">Participants</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost:53494/Html/Destinations.html">Destinations</a>
+                        <a class="nav-link" href="http://localhost:53494/Html/Destination.html">Destinations</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost:53494/Html/Voyages.html">Voyages</a>
+                        <a class="nav-link" href="http://localhost:53494/Html/Voyage.html">Voyages</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost:53494/Html/DossiersReservation.html">Dossiers Réservations</a>
+                        <a class="nav-link" href="http://localhost:53494/Html/DossierReservation.html">Dossiers Réservations</a>
                     </li>
                 </ul>
             </div>
         </nav>
     </div>
 
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Nom Client</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputNomClient" placeholder="Entrer nom client...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Prenom</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputPrenomClient" placeholder="Entrer prenom client...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Etat du dossier</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputEtatDossierReservation" placeholder="Spécifiez l'état du dossier...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Annulation</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputAnnulation" placeholder="Spécifiez riason annulation...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default">Rechercher</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Etat du dossier</th>
+                    <th>Annulation</th>
+                    <th style="width: 32px"></th>
+                    <th style="width: 32px"></th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+
+        <p id="loadingLabel">Chargement en cours...</p>
+
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js">
-                               // <img src="../image/logo_marron.svg">
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('.table').hide();
+            $('#loadingLabel').hide();
+
+            let resultat = 0;
+
+            $("form").submit(function (ev) {
+                // Préparation de  l'url de recherche
+                $('#loadingLabel').show();
+
+                let searchurl = new URL("http://localhost:53494/api/DossierReservations/search");
+                searchurl.searchParams.append("nom", $("#inputNom").val());
+                searchurl.searchParams.append("prenom", $("#inputPrenom").val());
+                searchurl.searchParams.append("etatDossier", $("#inputEtatDossierReservation").val());
+                searchurl.searchParams.append("annulation", $("#inputAnnulation").val());
+
+                console.log(searchurl);
+
+                // requete GET Ajax piur la recherche
+                $.ajax({
+                    url: searchurl,
+                    method: 'GET',
+
+                    success: function (data) {
+                        console.log(data);
+
+                        $('.table').show();
+                        $("#tableBody").empty();
+
+                        for (let item of data) {
+                            let newRow = `<td>${item.Nom}</td><td>${item.Prenom}</td><td>${item.PrixTotal}</td><td>${item.Assurance}</td><td>${item.EtatDossier}</td><td>${item.Annulation}</td>`;
+                            $("#tableBody").append(`<tr class="clickable-row" data-href="${item.ID}">${newRow}</tr>`);
+                        }
+
+                        $(".clickable-row").click(function () {
+                            newId = $(this).data("href");
+
+                            if (newId != resultat) {
+                                resultat = newId;
+
+                                $('#smalledit').remove(); $('#smalldelete').remove();
+
+                                let btnEdit = `<button type="button" class="btn btn-warning btn-xs>"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACySURBVDhP1dFLDgFBFEbhWgFrESIhBgxEEPGIGYskbIiO54wwd063eVVPJP7kS7o6XbfurQ5/lSkyHDH0RZkscUEDHVgoOQu84MlN1HFAUia4ooYx3HjGDNGMcIdtG4u84TjRDHCDLRvbtpN5voqkDy+sla+KIhZznGi68GNv2rTh2nGiqeCJEzzVIm52nKSssIOnedNudpzkbOD/3sNOekiO7T+wxfq7LhU3VIvHnyaED6KaJDJvn/naAAAAAElFTkSuQmCC"></button>`;
+                                let btnDel = `<button type="button" class="btn btn-warning btn-xs"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABLSURBVDhPY6AVaAXin0D8H0q3ADFJAKRJEMIE0yA+QQCyjViME+CVBAJC8nAFhGicYNSAwWAAcgpEB0SlSOQ8gI5B4k1APKgAAwMA0Fw/578RhNEAAAAASUVORK5CYII="></button>`;
+
+                                $(this).append(`<td id="smalledit">${btnEdit}</td><td id="smalldelete">${btnDel}</td>`);
+
+                                $('#smalledit').click(function () {
+                                    let modiffeUrl = new URL("http://localhost:53494/html/DossiersReservationModifier.html");
+                                    modiffeUrl.searchParams.append("id", resultat);
+                                    window.location.href = modiffeUrl;
+                                    return false;
+                                });
+
+                                $('#smalldelete').click(function () {
+                                    let modiffeUrl = new URL("http://localhost:53494/html/DossiersReservationSupprimer.html");
+                                    modiffeUrl.searchParams.append("id", resultat);
+                                    window.location.href = modiffeUrl;
+                                    return false;
+                                });
+
+                                if ($(this).hasClass('bg-info')) {
+                                    $(this).removeClass('bg-info');
+
+                                } else {
+                                    $(this).addClass('bg-info').siblings().removeClass('bg-info');
+                                }
+                            }
+                        });
+                    },
+                    error: function (error) {
+                        alert('Erreur !!!');
+                    }
+                });
+                $('#loadingLabel').hide();
+
+                ev.preventDefault();
+            });
+        });
     </script>
 </body>
 </html>
