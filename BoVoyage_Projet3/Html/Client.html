@@ -135,7 +135,7 @@
                 $('#loadingLabel').show();
 
                 let searchurl = new URL("http://localhost:53494/api/clients/search");
-                searchurl.searchParams.append("nom", $("#inputName").val());
+                searchurl.searchParams.append("nom", $("#inputNom").val());
                 searchurl.searchParams.append("email", $("#inputEmail").val());
 
                 console.log(searchurl);
