@@ -84,23 +84,18 @@
                     <th>Nom</th>
                     <th>Prénom</th>
                     <th>Email</th>
-                    <th></th>
-                    <th></th>
+                    <th style="width: 32px"></th>
+                    <th style="width: 32px"></th>
                 </tr>
             </thead>
-            <tbody id="tableBody">
-            </tbody>
+            <tbody id="tableBody"></tbody>
         </table>
-
-
-        <button type="button" class="btn btn-primary" id="boutonModifier">Modifier</button>
-
-
+        <!-->
+            <button type="button" class="btn btn-primary" id="boutonModifier">Modifier</button>
+        <-->
     </div>
 
-
-
-
+    
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -118,7 +113,7 @@
 
         $(document).ready(function () {
             let resultot = 0;
-
+            /*
             $('#boutonModifier').click(function () {
                 if (resultot == 0) { alert(`Hého! === 0 !!!`);}
                 let modiffeUrl = new URL("http://localhost:53494/html/ClientModifier.html");
@@ -126,9 +121,7 @@
                 window.location.href = modiffeUrl;
                 return false;
             });
-
-           
-
+            */
             $("form").submit(function (ev) {
 
                 let searchurl = new URL("http://localhost:53494/api/clients/search");
@@ -146,27 +139,52 @@
                         //alert(`aaaa`);
                         console.log(data);
 
+                        $("#tableBody").empty();
+
                         for (let item of data) {
                             let newRow = `<td>${item.Nom}</td><td>${item.Prenom}</td><td>${item.Email}</td>`;
-                            $("#tableBody").append(`<tr class="clickable-row " data-href="${item.ID}">${newRow}</tr>`);
+                            $("#tableBody").append(`<tr class="clickable-row" data-href="${item.ID}">${newRow}</tr>`);
                         }
 
                         $(".clickable-row").click(function () {
-                            resultot = $(this).data("href");
+                            newId = $(this).data("href");
+                            
+                            if (newId != resultot) {
+                                resultot = newId;
 
-                            // alert(resultot);
+                                $('#smalledit').remove(); $('#smalldelete').remove();
+
+                                // alert(resultot);                               
+
+                                let btnEdit = `<button type="button" class="btn btn-warning btn-xs>"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACySURBVDhP1dFLDgFBFEbhWgFrESIhBgxEEPGIGYskbIiO54wwd063eVVPJP7kS7o6XbfurQ5/lSkyHDH0RZkscUEDHVgoOQu84MlN1HFAUia4ooYx3HjGDNGMcIdtG4u84TjRDHCDLRvbtpN5voqkDy+sla+KIhZznGi68GNv2rTh2nGiqeCJEzzVIm52nKSssIOnedNudpzkbOD/3sNOekiO7T+wxfq7LhU3VIvHnyaED6KaJDJvn/naAAAAAElFTkSuQmCC"></button>`;
+                                let btnDel  = `<button type="button" class="btn btn-warning btn-xs"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABLSURBVDhPY6AVaAXin0D8H0q3ADFJAKRJEMIE0yA+QQCyjViME+CVBAJC8nAFhGicYNSAwWAAcgpEB0SlSOQ8gI5B4k1APKgAAwMA0Fw/578RhNEAAAAASUVORK5CYII="></button>`;
+
+                                $(this).append(`<td id="smalledit">${btnEdit}</td><td id="smalldelete">${btnDel}</td>`);
+
+                                $('#smalledit').click(function () {                                   
+                                    let modiffeUrl = new URL("http://localhost:53494/html/ClientModifier.html");
+                                    modiffeUrl.searchParams.append("id", resultot);
+                                    window.location.href = modiffeUrl;
+                                    return false;
+                                });
+
+                                $('#smalldelete').click(function () {
+                                    let modiffeUrl = new URL("http://localhost:53494/html/ClientSupprimer.html");
+                                    modiffeUrl.searchParams.append("id", resultot);
+                                    window.location.href = modiffeUrl;
+                                    return false;
+                                });
 
 
+                                if ($(this).hasClass('bg-info')) {
+                                    $(this).removeClass('bg-info');
 
-                            if ($(this).hasClass('bg-success')) {
-                                $(this).removeClass('bg-success');
+                                } else {
+                                    $(this).addClass('bg-info').siblings().removeClass('bg-info');
 
-                            } else {
-                                $(this).addClass('bg-success').siblings().removeClass('bg-success');
-
+                                }
+                                
                             }
-
-
                         });
 
                       
