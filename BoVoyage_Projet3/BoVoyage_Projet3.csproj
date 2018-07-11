@@ -98,16 +98,31 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
-    <Content Include="Html\AgenceVoyage.html" />
-    <Content Include="Html\Client.html" />
-    <Content Include="Html\ClientAjouter.html" />
-    <Content Include="Html\ClientModifier.html" />
-    <Content Include="Html\ClientSupprimer.html" />
-    <Content Include="Html\Destination.html" />
-    <Content Include="Html\DossierReservation.html" />
+    <Content Include="Html\AgenceVoyage\AgenceVoyage.html" />
+    <Content Include="Html\AgenceVoyage\AgenceVoyageSupprimer.html" />
+    <Content Include="Html\AgenceVoyage\AgenceVoyageAjouter.html" />
+    <Content Include="Html\AgenceVoyage\AgenceVoyageModifier.html" />
+    <Content Include="Html\Client\Client.html" />
+    <Content Include="Html\Client\ClientAjouter.html" />
+    <Content Include="Html\Client\ClientModifier.html" />
+    <Content Include="Html\Client\ClientSupprimer.html" />
+    <Content Include="Html\Destination\DestinationAjouter.html" />
+    <Content Include="Html\Destination\DestinationModifier.html" />
+    <Content Include="Html\Destination\DestinationSupprimer.html" />
+    <Content Include="Html\Destination\Destination.html" />
+    <Content Include="Html\DossierReservation\DossierReservationAjouter.html" />
+    <Content Include="Html\DossierReservation\DossierReservationModifier.html" />
+    <Content Include="Html\DossierReservation\DossierReservationSupprimer.html" />
+    <Content Include="Html\DossierReservation\DossierReservation.html" />
     <Content Include="Html\Home.html" />
-    <Content Include="Html\Participant.html" />
-    <Content Include="Html\Voyage.html" />
+    <Content Include="Html\Participant\ParticipantAjouter.html" />
+    <Content Include="Html\Participant\ParticipantModifier.html" />
+    <Content Include="Html\Participant\ParticipantSupprimer.html" />
+    <Content Include="Html\Participant\Participant.html" />
+    <Content Include="Html\Voyage\VoyageAjouter.html" />
+    <Content Include="Html\Voyage\VoyageModifier.html" />
+    <Content Include="Html\Voyage\VoyageSupprimer.html" />
+    <Content Include="Html\Voyage\Voyage.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -155,7 +170,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Html\Client\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201807101115062_Init.resx">

@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>BoVoyage Intranet </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" />
+</head>
+<body>
+    <header class="p-3 mb-2 bg-primary text-white"><h1>GESTION DES PARTICIPANTS</h1></header>
+
+    <div class="container" style="margin-top: 70px">
+        <div class="row">
+            <div class="col-md-12">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Nom</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputNom" placeholder="Entrer nom...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Prenom</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputPrenom" placeholder="Entrer prenom...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Adresse</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputAdresse" placeholder="Entrer l'adresse...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Téléphone</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputTel" placeholder="Entrer numéro téléphone...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Email</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputEmail" placeholder="Entrer email...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Date de Naissance</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputDateNaissance" placeholder="Entrer date de naissance...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Age</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputAge" placeholder="Entrer l'age...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default">Rechercher</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Adresse</th>
+                    <th>Téléphone</th>
+                    <th>Email</th>
+                    <th>Date de Naissance</th>
+                    <th>Age</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+        <button type="button" class="btn btn-primary" id="boutonModifier">Modifier</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $.urlParam = function (nom) {
+                var results = new RegExp('[\?&]' + nom + '=([^&#]*)').exec(window.location.href);
+                if (results == null) {
+                    return null;
+                }
+                else {
+                    return results[1] || 0;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

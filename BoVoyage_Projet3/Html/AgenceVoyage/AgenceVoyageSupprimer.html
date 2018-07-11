@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>BoVoyage Intranet </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" />
+</head>
+<body>
+    <header class="p-3 mb-2 bg-primary text-white"><h1>GESTION DES CLIENTS</h1></header>
+
+    <a title="ret" href="http://localhost:53494/Html/AgenceVoyage.html">
+        AgenceVoyage
+    </a> > Supprimer
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <form class="form-horizontal" role="form">
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default">Confirmer la suppression</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            $.urlParam = function (name) {
+                var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+                if (results == null) {
+                    return null;
+                }
+                else {
+                    return results[1] || 0;
+                }
+            }
+            // alert("Supprimer " + idToDelete);
+            let idToDelete = $.urlParam("id");
+
+            // requete GET Ajax pour vérifier si l'id existe
+            $.ajax({
+                url: "http://localhost:53494/api/AgenceVoyages/" + idToDelete,
+                method: 'GET',
+
+                success: function (data) {
+                    //alert(`aaaa`);
+                    console.log(data);
+                    if (data.Deleted) {
+                        alert("L'agence n'existe pas !");
+                        window.location.href = "http://localhost:53494/Html/AgenceVoyage.html";
+                    }
+                },
+                error: function (error) {
+                    alert("L'agence n'existe pas !");
+                    window.location.href = "http://localhost:53494/Html/AgenceVoyages.html";
+                }
+            });
+
+            $("form").submit(function (ev) {
+                // requete GET Ajax delete(flaggé) l'agence de voyage
+                $.ajax({
+                    url: "http://localhost:53494/api/AgenceVoyages/" + idToDelete,
+                    method: 'DELETE',
+
+                    success: function (data) {
+                        console.log(data);
+                        alert("Client supprimé !!!");
+                        window.location.href = "http://localhost:53494/Html/AgenceVoyage.html";
+                    },
+                    error: function (error) {
+                        alert("Error !");
+                        window.location.href = "http://localhost:53494/Html/AgenceVoyages.html";
+                    }
+                });
+
+                ev.preventDefault();
+            });
+        });
+    </script>
+</body>
+</html>

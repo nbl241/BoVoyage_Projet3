@@ -6,11 +6,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" />
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/resources/demos/style.css">
-
 </head>
 <body>
-
-    <header class="p-3 mb-2 bg-primary text-white"><h1>GESTION DES PARTICIPANTS</h1></header>
+    <header class="p-3 mb-2 bg-primary text-white"><h1>GESTION DES VOYAGES</h1></header>
 
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -23,22 +21,22 @@
                         <a class="nav-link" href="http://localhost:53494/Html/Home.html">Accueil<span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost:53494/Html/AgenceVoyage.html">Agences</a>
+                        <a class="nav-link" href="http://localhost:53494/Html/AgenceVoyage/AgenceVoyage.html">Agences</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost:53494/Html/Client.html">Clients</a>
+                        <a class="nav-link" href="http://localhost:53494/Html/Client/Client.html">Clients</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost:53494/Html/participant.html">Participants</a>
+                        <a class="nav-link" href="http://localhost:53494/Html/Participant/Participant.html">Participants</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost:53494/Html/Destination.html">Destinations</a>
+                        <a class="nav-link" href="http://localhost:53494/Html/Destination/Destination.html">Destinations</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost:53494/Html/Voyage.html">Voyages</a>
+                        <a class="nav-link" href="http://localhost:53494/Html/Voyage/Voyage.html">Voyages</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost:53494/Html/DossierReservation.html">Dossiers Réservations</a>
+                        <a class="nav-link" href="http://localhost:53494/Html/DossierReservation/DossierReservation.html">Dossiers Réservations</a>
                     </li>
                 </ul>
             </div>
@@ -50,39 +48,39 @@
             <div class="col-md-12">
                 <form class="form-horizontal" role="form">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">Nom</label>
+                        <label class="col-sm-2 control-label">Date aller</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="inputNom" placeholder="Entrer nom...">
+                            <input type="text" class="form-control" id="datepicker" placeholder="Entrer Date aller...">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">Prenom</label>
+                        <label class="col-sm-2 control-label">Date retour</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="inputPrenom" placeholder="Entrer prenom...">
+                            <input type="text" class="form-control" id="datepicker" placeholder="Entrer date retour...">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">Adresse</label>
+                        <label class="col-sm-2 control-label">Places disponibles</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="inputAdresse" placeholder="Entrer l'adresse...">
+                            <input type="text" class="form-control" id="inputPlaceDisponible" placeholder="Entrer nombre de places disponibles...">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">Téléphone</label>
+                        <label class="col-sm-2 control-label">Tarif tout compris</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="inputTel" placeholder="Entrer numéro téléphone...">
+                            <input type="text" class="form-control" id="inputTarifToutCompris" placeholder="Entrer le tarif tout compris...">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">Date de Naissance</label>
+                        <label class="col-sm-2 control-label">Agence</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="datepicker" placeholder="Entrer date de naissance...">
+                            <input type="text" class="form-control" id="inputAgence" placeholder="Entrer nom de l'agence...">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">Age</label>
+                        <label class="col-sm-2 control-label">Destination</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="inputAge" placeholder="Entrer l'age...">
+                            <input type="text" class="form-control" id="inputDestination" placeholder="Entrer la destination...">
                         </div>
                     </div>
                     <div class="form-group">
@@ -96,19 +94,16 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th>Nom</th>
-                    <th>Prénom</th>
-                    <th>Adresse</th>
-                    <th>Téléphone</th>
-                    <th>Date de Naissance</th>
-                    <th>Age</th>
+                    <th>Date aller</th>
+                    <th>Date retour</th>
+                    <th>Places disponibles</th>
+                    <th>Tarif tout compris</th>
+                    <th>Agence</th>
+                    <th>Destination</th>
                 </tr>
             </thead>
             <tbody id="tableBody"></tbody>
         </table>
-
-        <p id="loadingLabel">Chargement en cours...</p>
-
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -137,15 +132,17 @@
                 // Préparation de  l'url de recherche
                 $('#loadingLabel').show();
 
-                let searchurl = new URL("http://localhost:53494/api/participants/search");
-                searchurl.searchParams.append("nom", $("#inputNom").val());
-                searchurl.searchParams.append("prenom", $("#inputPrenom").val());
-                searchurl.searchParams.append("adresse", $("#inputAdresse").val());
-                searchurl.searchParams.append("telephone", $("#inputTel").val());
-                searchurl.searchParams.append("datedenaissance", $("#inputDateNaissance").val());
+                let searchurl = new URL("http://localhost:53494/api/Voyages/search");
+                searchurl.searchParams.append("dateAller", $("#inputDateAller").val());
+                searchurl.searchParams.append("dateRetour", $("#inputDateRetour").val());
+                searchurl.searchParams.append("placeDisponible", $("#inputPlaceDisponible").val());
+                searchurl.searchParams.append("tarifToutCompris", $("#inputTarifToutCompris").val());
+                searchurl.searchParams.append("agence", $("#inputAgence").val());
+                searchurl.searchParams.append("destination", $("#inputDestination").val());
 
                 console.log(searchurl);
 
+                // requete GET Ajax piur la recherche
                 $.ajax({
                     url: searchurl,
                     method: 'GET',
@@ -157,12 +154,12 @@
                         $("#tableBody").empty();
 
                         for (let item of data) {
-                            let newRow = `<td>${item.Nom}</td><td>${item.Prenom}</td><td>${item.Adresse}</td><td>${item.Telephone}</td><td>${item.DateNaissance}</td>`;
-                            $("#tableBody").append(`<tr class="clickable-row " data-href="${item.ID}">${newRow}</tr>`);
+                            let newRow = `<td>${item.DateAller}</td><td>${item.DateRetour}</td><td>${item.PlaceDisponible}</td><td>${item.TarifToutCompris}</td><td>${item.IdAgenceVoyage}</td><td>${item.IdDestination}</td>`;
+                            $("#tableBody").append(`<tr class="clickable-row" data-href="${item.ID}">${newRow}</tr>`);
                         }
 
                         $(".clickable-row").click(function () {
-                            resultot = $(this).data("href");
+                            newId = $(this).data("href");
 
                             if (newId != resultat) {
                                 resultat = newId;
@@ -175,14 +172,14 @@
                                 $(this).append(`<td id="smalledit">${btnEdit}</td><td id="smalldelete">${btnDel}</td>`);
 
                                 $('#smalledit').click(function () {
-                                    let modiffeUrl = new URL("http://localhost:53494/html/ParticipantModifier.html");
+                                    let modiffeUrl = new URL("http://localhost:53494/html/VoyagesModifier.html");
                                     modiffeUrl.searchParams.append("id", resultat);
                                     window.location.href = modiffeUrl;
                                     return false;
                                 });
 
                                 $('#smalldelete').click(function () {
-                                    let modiffeUrl = new URL("http://localhost:53494/html/ParticipantSupprimer.html");
+                                    let modiffeUrl = new URL("http://localhost:53494/html/VoyagesSupprimer.html");
                                     modiffeUrl.searchParams.append("id", resultat);
                                     window.location.href = modiffeUrl;
                                     return false;
@@ -207,5 +204,6 @@
             });
         });
     </script>
+
 </body>
 </html>
