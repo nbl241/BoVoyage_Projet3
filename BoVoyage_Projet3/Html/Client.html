@@ -111,7 +111,7 @@
             </thead>
             <tbody id="tableBody"></tbody>
         </table>
-    
+
         <p id="loadingLabel">Chargement en cours...</p>
 
         <button type="button" class="btn btn-primary" id="boutonModifier">Modifier</button>
@@ -129,31 +129,18 @@
             $('#loadingLabel').hide();
 
             let resultot = 0;
-          
-            $("form").submit(function (ev) {           
+
+            $("form").submit(function (ev) {
                 // Préparation de  l'url de recherche
                 $('#loadingLabel').show();
 
-            $('#boutonModifier').click(function () {
-                if (resultot == 0) { alert(`Erreur !!!`); }
-                let modiffeUrl = new URL("http://localhost:53494/html/ClientModifier.html");
-                modiffeUrl.searchParams.append("id", resultot);
-                window.location.href = modiffeUrl;
-                return false;
-            });
-
-            $("form").submit(function (ev) {
                 let searchurl = new URL("http://localhost:53494/api/clients/search");
-                searchurl.searchParams.append("nom", $("#inputNom").val());
-                searchurl.searchParams.append("prenom", $("#inputPrenom").val());
-                searchurl.searchParams.append("adresse", $("#inputAdresse").val());
-                searchurl.searchParams.append("telephone", $("#inputTel").val());
+                searchurl.searchParams.append("nom", $("#inputName").val());
                 searchurl.searchParams.append("email", $("#inputEmail").val());
-                searchurl.searchParams.append("datedenaissance", $("#inputDateNaissance").val());
 
                 console.log(searchurl);
 
-
+                // requete GET Ajax piur la recherche
                 $.ajax({
                     url: searchurl,
                     method: 'GET',
@@ -166,24 +153,24 @@
                         $("#tableBody").empty();
 
                         for (let item of data) {
-                            let newRow = `<td>${item.Nom}</td><td>${item.Prenom}</td><td>${item.Adresse}</td><td>${item.Telephone}</td><td>${item.Email}</td><td>${item.DateNaissance}</td>`;
-                            $("#tableBody").append(`<tr class="clickable-row " data-href="${item.ID}">${newRow}</tr>`);
+                            let newRow = `<td>${item.Nom}</td><td>${item.Prenom}</td><td>${item.Email}</td>`;
+                            $("#tableBody").append(`<tr class="clickable-row" data-href="${item.ID}">${newRow}</tr>`);
                         }
 
                         $(".clickable-row").click(function () {
                             newId = $(this).data("href");
-                            
+
                             if (newId != resultot) {
                                 resultot = newId;
-                              
+
                                 $('#smalledit').remove(); $('#smalldelete').remove();
-                                       
+
                                 let btnEdit = `<button type="button" class="btn btn-warning btn-xs>"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACySURBVDhP1dFLDgFBFEbhWgFrESIhBgxEEPGIGYskbIiO54wwd063eVVPJP7kS7o6XbfurQ5/lSkyHDH0RZkscUEDHVgoOQu84MlN1HFAUia4ooYx3HjGDNGMcIdtG4u84TjRDHCDLRvbtpN5voqkDy+sla+KIhZznGi68GNv2rTh2nGiqeCJEzzVIm52nKSssIOnedNudpzkbOD/3sNOekiO7T+wxfq7LhU3VIvHnyaED6KaJDJvn/naAAAAAElFTkSuQmCC"></button>`;
-                                let btnDel  = `<button type="button" class="btn btn-warning btn-xs"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABLSURBVDhPY6AVaAXin0D8H0q3ADFJAKRJEMIE0yA+QQCyjViME+CVBAJC8nAFhGicYNSAwWAAcgpEB0SlSOQ8gI5B4k1APKgAAwMA0Fw/578RhNEAAAAASUVORK5CYII="></button>`;
+                                let btnDel = `<button type="button" class="btn btn-warning btn-xs"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABLSURBVDhPY6AVaAXin0D8H0q3ADFJAKRJEMIE0yA+QQCyjViME+CVBAJC8nAFhGicYNSAwWAAcgpEB0SlSOQ8gI5B4k1APKgAAwMA0Fw/578RhNEAAAAASUVORK5CYII="></button>`;
 
                                 $(this).append(`<td id="smalledit">${btnEdit}</td><td id="smalldelete">${btnDel}</td>`);
 
-                                $('#smalledit').click(function () {                                   
+                                $('#smalledit').click(function () {
                                     let modiffeUrl = new URL("http://localhost:53494/html/ClientModifier.html");
                                     modiffeUrl.searchParams.append("id", resultot);
                                     window.location.href = modiffeUrl;
@@ -202,21 +189,22 @@
 
                                 } else {
                                     $(this).addClass('bg-info').siblings().removeClass('bg-info');
-                                }                                
+                                }
                             }
                         });
 
-                      
                     },
                     error: function (error) {
-                        alert('Erreurr !!!');
+                        alert('Problème de Error !!!');
                     }
+
                 });
                 $('#loadingLabel').hide();
 
                 ev.preventDefault();
             });
         });
+
     </script>
 </body>
 </html>
