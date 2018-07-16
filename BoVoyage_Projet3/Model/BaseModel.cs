@@ -19,6 +19,5 @@ namespace BoVoyage_Projet3.Models
 
         //pour rendre une valeur nullable en base de donnée sur le type primitif
         public DateTime? DeletedAt { get; set; }
-        
     }
 }
